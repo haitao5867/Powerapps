@@ -1,0 +1,37 @@
+Component填报人首页 As CanvasComponent:
+    Fill: |-
+        =RGBA(
+            62,
+            81,
+            150,
+            1
+        )
+    Height: =App.Height
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Image4_1 As image:
+        Height: =457
+        Image: =球2
+        Width: =697
+        X: =330
+        Y: =311
+        ZIndex: =1
+
+    Image6_2 As image:
+        Height: =332
+        Image: =球3
+        Width: =502
+        X: =294
+        Y: =184
+        ZIndex: =2
+
+    Image3_1 As image:
+        Height: =768
+        Image: =球1
+        Width: =542
+        X: =824
+        ZIndex: =3
+

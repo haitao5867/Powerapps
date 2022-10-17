@@ -1,0 +1,171 @@
+App As appinfo:
+    BackEnabled: =false
+    OnStart: |
+        =Set(
+            glb_version,
+            "1.0.0.0"
+        );
+        Set(
+            glb_UserEmail,
+            User().Email
+        );
+        Set(
+            glb_ListType,
+            {
+                EditList: "EditList",
+                ApproveList: "ApproveList",
+                ViewList: "ViewList"
+            }
+        );
+        //系统角色定义
+        Set(
+            glb_Position,
+            {
+                Requestor: "Requestor",
+                BTL: "BTL",
+                PLO: "PLO",
+                BPO: "BPO"
+            }
+        );
+        Set(
+            glb_FormActionType,
+            {
+                NewForm: "NewForm",
+                EditForm: "EditForm",
+                ViewForm: "ViewForm",
+                ApproveForm: "ApproveForm"
+            }
+        );
+        Set(
+            glb_ConstructionRecord,
+            LookUp(
+                'Role Name Assignment Matrix',
+                'Role email' = glb_UserEmail
+            )
+        );
+        Set(
+            glb_UserInfo,
+            {
+                FullName: User().FullName,
+                Email: glb_UserEmail,
+                Title: Switch(
+                    glb_ConstructionRecord.Role,
+                    "PLO",
+                    glb_Position.PLO,
+                    "BPO",
+                    glb_Position.BPO,
+                    "BTL",
+                    glb_Position.BTL,
+                    "Requestor"
+                )
+            }
+        );
+        //ColorStyle//
+        Set(
+            glb_ColorStyle,
+            {
+                主色调: RGBA(
+                    62,
+                    81,
+                    150,
+                    1
+                ),
+                Linear: RGBA(
+                    59,
+                    142,
+                    189,
+                    1
+                ),
+                拒绝色: RGBA(
+                    214,
+                    74,
+                    78,
+                    1
+                ),
+                同意色: RGBA(
+                    37,
+                    175,
+                    142,
+                    1
+                ),
+                等待色: RGBA(
+                    255,
+                    155,
+                    63,
+                    1
+                ),
+                通过色: RGBA(
+                    0,
+                    162,
+                    232,
+                    1
+                ),
+                Disabled: RGBA(
+                    181,
+                    181,
+                    181,
+                    1
+                ),
+                标题底色: RGBA(
+                    236,
+                    244,
+                    255,
+                    1
+                ),
+                分割线: RGBA(
+                    213,
+                    221,
+                    250,
+                    1
+                ),
+                白色: RGBA(
+                    255,
+                    255,
+                    255,
+                    1
+                ),
+                提醒文字底色: RGBA(
+                    255,
+                    247,
+                    218,
+                    1
+                ),
+                操作色: RGBA(
+                    0,
+                    122,
+                    255,
+                    1
+                ),
+                内容字: RGBA(
+                    67,
+                    91,
+                    125,
+                    1
+                ),
+                标题字: RGBA(
+                    0,
+                    37,
+                    91,
+                    1
+                ),
+                线框色: RGBA(
+                    217,
+                    217,
+                    217,
+                    1
+                ),
+                DisabledFill: RGBA(
+                    242,
+                    242,
+                    242,
+                    1
+                ),
+                解析字: RGBA(
+                    104,
+                    121,
+                    147,
+                    1
+                )
+            }
+        );
+

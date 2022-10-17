@@ -1,0 +1,26 @@
+Component_Loading As CanvasComponent:
+    Fill: =RGBA(255, 255, 255, 0.85)
+    Height: =App.DesignHeight
+    LoadingShowText: ="Loading......"
+    Width: =App.DesignWidth
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Icon1 As icon.Reload:
+        Height: =284
+        Icon: =Icon.Reload
+        Width: =367
+        X: =500
+        Y: =130
+        ZIndex: =1
+
+    Label4 As label:
+        Align: =Align.Center
+        Size: =20
+        Text: =Parent.LoadingShowText
+        Width: =367
+        X: =500
+        Y: =500
+        ZIndex: =2
+

@@ -1,0 +1,2778 @@
+PETForm As screen:
+    OnVisible: |
+        =//判断展示的form状态//
+        If(
+            loc_FormActionType = glb_FormActionType.NewForm,
+            NewForm(Form_Panda),
+            EditForm(Form_Panda)
+        );
+        //判断数据是否在集合里//
+        If(
+            IsEmpty(col_Rolemartix),
+            ClearCollect(
+                col_Rolemartix,
+                'Role Name Assignment Matrix'
+            )
+        );
+        //加载关联记录//
+
+    Component_Header_4 As Component_Header_1:
+        BackScreen: =loc_LastScreen
+        Headertext: ="PET"
+
+    Container_RequestControl As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(62, 81, 150, 1)
+        Height: =80
+        PaddingRight: =0.00
+        PaddingTop: =0.00
+        Width: =1366
+        Y: =80
+        ZIndex: =2
+
+        Image_Approve As image:
+            Height: =80
+            Image: =Approve
+            OnSelect: |
+                =If(
+                    loc_SelectedPandaRecord.'Approval Status'.Value = "Sent to BTL for budget approve",
+                    UpdateContext({loc_BTLConfirmVisible: true}),
+                    //弹出审批窗口
+                    UpdateContext({loc_ApproveWindowsVisible: true});
+                    //传递审批结果参数
+                    UpdateContext({loc_ApproveResult: true});
+                    Reset(TextInput2)
+                );
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Visible: |-
+                =loc_FormActionType = glb_FormActionType.ApproveForm && loc_SelectedPandaRecord.'Approval Status'.Value in [
+                    "Sent to Business Lead for approve",
+                    "Sent to BTL for budget approve"
+                ]
+            Width: =200
+            X: =1166
+            ZIndex: =5
+
+        Image_Reject As image:
+            Height: =80
+            Image: =Reject
+            OnSelect: |-
+                =//弹出审批窗口
+                UpdateContext({loc_ApproveWindowsVisible:true});
+                //传递审批结果参数
+                UpdateContext({loc_ApproveResult:false});
+                Reset(TextInput2)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Visible: |-
+                =loc_FormActionType = glb_FormActionType.ApproveForm && Switch(
+                    glb_UserInfo.Title,
+                    glb_Position.BPO,
+                    loc_SelectedPandaRecord.'Approval Status'.Value = "Sent to Business Lead for approve" && !IsBlank(
+                        LookUp(
+                            'Approval record',
+                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role email'.Value = glb_UserInfo.Email && Approval.Value = "Waiting approval"
+                        )
+                    ),
+                    glb_Position.PLO,
+                    loc_SelectedPandaRecord.'Approval Status'.Value = "Sent to PLO for confirmation" && !IsBlank(
+                        LookUp(
+                            'Approval record',
+                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role email'.Value = glb_UserInfo.Email && Approval.Value = "Waiting approval"
+                        )
+                    ),
+                    glb_Position.BTL,
+                    loc_SelectedPandaRecord.'Approval Status'.Value = "Sent to BTL for budget approve" && !IsBlank(
+                        LookUp(
+                            'Approval record',
+                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role email'.Value = glb_UserInfo.Email && Approval.Value = "Waiting approval"
+                        )
+                    )
+                )
+            Width: =200
+            X: |-
+                =If(
+                    loc_SelectedPandaRecord.'Approval Status'.Value = "Sent to PLO for confirmation",
+                    510,
+                    966
+                )
+            ZIndex: =6
+
+        Image_PLOConfirm As image:
+            Height: =80
+            Image: =PLOConfirm
+            OnSelect: |-
+                =UpdateContext({loc_PLOConfirmVisible: true})
+            PaddingBottom: =10
+            PaddingTop: =10
+            Visible: |-
+                =loc_FormActionType = glb_FormActionType.ApproveForm && loc_SelectedPandaRecord.'Approval Status'.Value = "Sent to PLO for confirmation" && LookUp(
+                    'Approval record',
+                    Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "PLO"
+                ).'Approver: Role email'.Value = glb_UserInfo.Email
+            Width: =283
+            X: =1064
+            ZIndex: =7
+
+        Image_SendToBTLApprove As image:
+            Height: =80
+            Image: =SendtoBTLApprove
+            OnSelect: |-
+                =UpdateContext({loc_AssignBTLVisible: true})
+            PaddingBottom: =10
+            PaddingTop: =10
+            Visible: |-
+                =loc_FormActionType = glb_FormActionType.ApproveForm && loc_SelectedPandaRecord.'Approval Status'.Value = "Sent to PLO for confirmation" && LookUp(
+                    'Approval record',
+                    Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "PLO"
+                ).'Approver: Role email'.Value = glb_UserInfo.Email
+            Width: =315
+            X: =728
+            ZIndex: =8
+
+        Image_Submit As image:
+            Height: =80
+            Image: =Submit
+            OnSelect: |-
+                =UpdateContext({loc_LoadingVisible: true});
+                
+                SubmitForm(Form_Panda)
+            PaddingBottom: =10
+            PaddingLeft: =10
+            PaddingRight: =10
+            PaddingTop: =10
+            Visible: =loc_FormActionType in [glb_FormActionType.NewForm,glb_FormActionType.EditForm]
+            Width: =200
+            X: =1166
+            ZIndex: =9
+
+        Image_AssignPLO As image:
+            Height: =80
+            Image: =AssignPLO
+            OnSelect: |-
+                =UpdateContext({loc_AssignPLOVisible:true})
+            Visible: |-
+                =loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = glb_Position.PLO && IsBlank(
+                    LookUp(
+                        'Approval record',
+                        Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "PLO"
+                    ).Approver
+                )
+            Width: =200
+            X: =938
+            ZIndex: =10
+
+        Image5 As image:
+            Height: =80
+            Image: =UpdateStatus
+            OnSelect: |-
+                =UpdateContext({loc_PLOUpdateStatus:true})
+            Visible: =loc_FormActionType = glb_FormActionType.ApproveForm && loc_SelectedPandaRecord.'Approval Status'.Value = "PLO In Developmemt"
+            Width: =200
+            X: =1142
+            ZIndex: =11
+
+        Group_RequestStatus As group:
+            Height: =5
+            Width: =5
+            X: =60
+            Y: =60
+            ZIndex: =19
+
+            Label12 As label:
+                Color: =RGBA(255, 255, 255, 1)
+                FontWeight: =FontWeight.Semibold
+                PaddingLeft: =20
+                Size: =15
+                Text: |-
+                    ="Status: "
+                Visible: =loc_FormActionType<>glb_FormActionType.NewForm
+                Width: =99
+                ZIndex: =1
+
+            Button9 As button:
+                BorderColor: =White
+                DisabledBorderColor: =White
+                DisabledColor: =White
+                DisabledFill: =RGBA(62, 81, 150, 1)
+                DisplayMode: =DisplayMode.Disabled
+                Height: =30
+                Size: =13
+                Text: =loc_SelectedPandaRecord.'Approval Status'.Value
+                Visible: =loc_FormActionType<>glb_FormActionType.NewForm
+                Width: =321
+                X: =99
+                Y: =5
+                ZIndex: =2
+
+            Label12_1 As label:
+                Color: =RGBA(255, 255, 255, 1)
+                FontWeight: =FontWeight.Semibold
+                PaddingLeft: =20
+                Size: =15
+                Text: |-
+                    ="Approver: "
+                Visible: =loc_FormActionType<>glb_FormActionType.NewForm
+                Width: =131
+                Y: =40
+                ZIndex: =3
+
+            Label12_2 As label:
+                Color: =RGBA(255, 255, 255, 1)
+                FontWeight: =FontWeight.Semibold
+                PaddingLeft: =20
+                Size: =15
+                Text: |-
+                    =Switch(
+                        loc_SelectedPandaRecord.'Approval Status'.Value,
+                        "Sent to Business Lead for approve",
+                        Left(
+                            Concat(
+                                Distinct(
+                                    Filter(
+                                        'Approval record',
+                                        Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "BPO"
+                                    ),
+                                    'Approver: Role name'.Value
+                                ),
+                                Result & " & "
+                            ),
+                            Len(
+                                Concat(
+                                    Distinct(
+                                        Filter(
+                                            'Approval record',
+                                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "BPO"
+                                        ),
+                                        'Approver: Role name'.Value
+                                    ),
+                                    Result & " & "
+                                )
+                            ) - 2
+                        ),
+                        "Sent to PLO for confirmation",
+                        Coalesce(
+                            LookUp(
+                                'Approval record',
+                                Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "PLO"
+                            ).'Approver: Role name'.Value,
+                            "Wait to assign"
+                        ),
+                        "Sent to BTL for budget approve",
+                        Coalesce(
+                            LookUp(
+                                'Approval record',
+                                Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "BTL"
+                            ).'Approver: Role name'.Value,
+                            "Wait to assign"
+                        ),
+                        "PLO In Developmemt",
+                        LookUp(
+                            'Approval record',
+                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "PLO"
+                        ).'Approver: Role name'.Value,
+                        "Business Lead Reject",
+                        Left(
+                            Concat(
+                                Distinct(
+                                    Filter(
+                                        'Approval record',
+                                        Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "BPO"
+                                    ),
+                                    'Approver: Role name'.Value
+                                ),
+                                Result & " & "
+                            ),
+                            Len(
+                                Concat(
+                                    Distinct(
+                                        Filter(
+                                            'Approval record',
+                                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "BPO"
+                                        ),
+                                        'Approver: Role name'.Value
+                                    ),
+                                    Result & " & "
+                                )
+                            ) - 2
+                        ),
+                        "BTL Reject",
+                        LookUp(
+                            'Approval record',
+                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "BTL"
+                        ).'Approver: Role name'.Value,
+                        "PLO Reject",
+                        LookUp(
+                            'Approval record',
+                            Request.Id = loc_SelectedPandaRecord.ID && 'Approver: Role'.Value = "PLO"
+                        ).'Approver: Role name'.Value
+                    )
+                Visible: =loc_FormActionType<>glb_FormActionType.NewForm
+                Width: =781
+                X: =131
+                Y: =40
+                ZIndex: =4
+
+    Label1 As label:
+        Height: =57
+        Text: =loc_FormActionType
+        Width: =297
+        X: =508
+        ZIndex: =3
+
+    Form_Panda As form:
+        DataSource: ='PandA Tracker'
+        Height: =608
+        Item: =loc_SelectedPandaRecord
+        NumberOfColumns: =2
+        OnSuccess: |-
+            =//Rename ID以放ID的名称double//
+            Concurrent(
+                ForAll(
+                    RenameColumns(
+                        Filter(
+                            col_ApproverSelected,
+                            Role = "BPO"
+                        ),
+                        "ID",
+                        "ApproverID"
+                    ),
+                    Patch(
+                        'Approval record',
+                        Defaults('Approval record'),
+                        {
+                            Title: Self.LastSubmit.'Requirement Title',
+                            Request: {
+                                Id: Self.LastSubmit.ID,
+                                Value: Blank()
+                            },
+                            Approver: {
+                                Id: ApproverID,
+                                Value: Blank()
+                            },
+                            Approval: {Value: "Waiting approval"}
+                        }
+                    )
+                ),
+                Patch(
+                    'Approval record',
+                    Defaults('Approval record'),
+                    {
+                        Title: Self.LastSubmit.'Requirement Title',
+                        Request: {
+                            Id: Self.LastSubmit.ID,
+                            Value: Blank()
+                        },
+                        Approval: {Value: "PLO need confirmed"}
+                    }
+                ),
+                Patch(
+                    'Approval record',
+                    Defaults('Approval record'),
+                    {
+                        Title: Self.LastSubmit.'Requirement Title',
+                        Request: {
+                            Id: Self.LastSubmit.ID,
+                            Value: Blank()
+                        },
+                        Approval: {Value: "BTL need confirmed"}
+                    }
+                )
+            );
+            UpdateContext({loc_LoadingVisible: false});
+            ClearCollect(
+                col_PandaList,
+                RenameColumns(
+                    Filter(
+                        'PandA Tracker',
+                        'Requested by'.Email = glb_UserInfo.Email || 'Created By'.Email = glb_UserInfo.Email
+                    ).ID,
+                    "ID",
+                    "PandaRequestID"
+                )
+            );
+            Navigate(
+                loc_LastScreen,
+                ScreenTransition.Fade
+            );
+            Set(
+                glb_NotifyText,
+                "Submit Sucessfully!"
+            );
+            Reset(Component_Notify_3)
+        Width: =1366
+        Y: =160
+        ZIndex: =4
+
+        Comment_DataCard1 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Comment"
+            Default: =ThisItem.Comment
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Comment")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =289
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "Comment")
+            Required: =false
+            Update: =DataCardValue1.Text
+            Width: =1366
+            X: =0
+            Y: =7
+            ZIndex: =1
+
+            DataCardKey1 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                Height: =208
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingBottom: =10
+                PaddingLeft: =5
+                PaddingTop: =10
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Tooltip: =Parent.DisplayName
+                Width: =980
+                X: =30
+                Y: =DataCardKey1.Y + DataCardKey1.Height + 5
+                ZIndex: =2
+
+            ErrorMessage1 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue1.Y + DataCardValue1.Height
+                ZIndex: =3
+
+            StarVisible1 As label:
+                Align: =Align.Center
+                Height: =DataCardKey1.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey1.Y
+                ZIndex: =4
+
+        Company_DataCard2 As typedDataCard.comboBoxMultiSelectEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Company"
+            Default: =ThisItem.Company
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Company")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            Required: =false
+            Update: =DataCardValue32.SelectedItems
+            Width: =683
+            X: =0
+            Y: =0
+            ZIndex: =13
+
+            DataCardKey32 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue32 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm,
+                        DisplayMode.Edit,
+                        View
+                    )
+                Items: =Choices([@'PandA Tracker'].Company)
+                OnChange: |-
+                    =//把所选存进集合//
+                    ClearCollect(
+                        col_Companyselected,
+                        Self.SelectedItems
+                    );
+                    //先清除集合数据//
+                    Clear(col_ApproverSelected);
+                        //循环查找//
+                    ForAll(
+                        RenameColumns(
+                            col_Companyselected,
+                            "Value",
+                            "forallCompany"
+                        ),
+                        ForAll(
+                            RenameColumns(
+                                col_BusinessFunselected,
+                                "Value",
+                                "forallBusinessFun"
+                            ),
+                            Collect(
+                                col_ApproverSelected,
+                                Filter(
+                                    col_Rolemartix,
+                                    forallCompany = Company && forallBusinessFun = 'Business function '
+                                )
+                            )
+                        )
+                    )
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices('PandA Tracker'.Company,DataCardValue32.SearchText)
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =533
+                X: =30
+                Y: =DataCardKey32.Y + DataCardKey32.Height + 5
+                ZIndex: =2
+
+            ErrorMessage32 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue32.Y + DataCardValue32.Height
+                ZIndex: =3
+
+            StarVisible32 As label:
+                Align: =Align.Center
+                Height: =DataCardKey32.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey32.Y
+                ZIndex: =4
+
+            Label3 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                X: =12
+                Y: =16
+                ZIndex: =5
+
+        "'Business Function_DataCard2' As typedDataCard.comboBoxMultiSelectEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="BusinessFunction"
+            Default: =ThisItem.'Business Function'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"BusinessFunction")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue33.SelectedItems
+            Width: =683
+            X: =1
+            Y: =0
+            ZIndex: =13
+
+            DataCardKey33 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue33 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =If(loc_FormActionType=glb_FormActionType.NewForm,DisplayMode.Edit,View)
+                Items: =Choices([@'PandA Tracker'].'Business Function')
+                OnChange: |-
+                    =//把所选存进集合//
+                    ClearCollect(
+                        col_BusinessFunselected,
+                        Self.SelectedItems
+                    );
+                    //先清除集合数据//
+                    Clear(col_ApproverSelected);
+                        //循环查找//
+                    ForAll(
+                        RenameColumns(
+                            col_Companyselected,
+                            "Value",
+                            "forallCompany"
+                        ),
+                        ForAll(
+                            RenameColumns(
+                                col_BusinessFunselected,
+                                "Value",
+                                "forallBusinessFun"
+                            ),
+                            Collect(
+                                col_ApproverSelected,
+                                Filter(
+                                    col_Rolemartix,
+                                    forallCompany = Company && forallBusinessFun = 'Business function '
+                                )
+                            )
+                        )
+                    )
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices('PandA Tracker'.'Business Function',DataCardValue33.SearchText)
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =533
+                X: =30
+                Y: =DataCardKey33.Y + DataCardKey33.Height + 5
+                ZIndex: =2
+
+            ErrorMessage33 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue33.Y + DataCardValue33.Height
+                ZIndex: =3
+
+            StarVisible33 As label:
+                Align: =Align.Center
+                Height: =DataCardKey33.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey33.Y
+                ZIndex: =4
+
+            Label3_1 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                X: =12
+                Y: =16
+                ZIndex: =5
+
+        "'Requirement Title_DataCard2' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="RequirementTitle"
+            Default: =ThisItem.'Requirement Title'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"RequirementTitle")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "RequirementTitle")
+            Required: =false
+            Update: =DataCardValue34.Text
+            Width: =683
+            X: =0
+            Y: =1
+            ZIndex: =13
+
+            DataCardKey34 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue34 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =533
+                X: =30
+                Y: =DataCardKey34.Y + DataCardKey34.Height + 5
+                ZIndex: =2
+
+            ErrorMessage34 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue34.Y + DataCardValue34.Height
+                ZIndex: =3
+
+            StarVisible34 As label:
+                Align: =Align.Center
+                Height: =DataCardKey34.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey34.Y
+                ZIndex: =4
+
+            Label3_2 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                X: =12
+                Y: =21
+                ZIndex: =5
+
+        "'Requirement description_DataCard2' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Requirementdescription"
+            Default: =ThisItem.'Requirement description'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Requirementdescription")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "Requirementdescription")
+            Required: =false
+            Update: =DataCardValue35.Text
+            Width: =1366
+            X: =0
+            Y: =2
+            ZIndex: =13
+
+            DataCardKey35 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue35 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                Height: =224
+                HintText: |-
+                    ="As a [User Role],
+                    I want [Result],
+                    So that [Reason/Benefit]
+                    "
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingBottom: =10
+                PaddingLeft: =10
+                PaddingTop: =10
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Tooltip: =Parent.DisplayName
+                Width: =980
+                X: =30
+                Y: =DataCardKey35.Y + DataCardKey35.Height + 5
+                ZIndex: =2
+
+            ErrorMessage35 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue35.Y + DataCardValue35.Height
+                ZIndex: =3
+
+            StarVisible35 As label:
+                Align: =Align.Center
+                Height: =DataCardKey35.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey35.Y
+                ZIndex: =4
+
+            Label3_3 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                X: =12
+                Y: =13
+                ZIndex: =5
+
+        "'Business benefit_DataCard2' As typedDataCard.comboBoxMultiSelectEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Businessbenefit"
+            Default: =ThisItem.'Business benefit'
+            DisplayMode: =If(loc_FormActionType=glb_FormActionType.ApproveForm || glb_UserInfo.Title= "BPO" Or "BTL",DisplayMode.View,Edit)
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Businessbenefit")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =200
+            Required: =false
+            Update: =DataCardValue36.SelectedItems
+            Width: =683
+            X: =0
+            Y: =3
+            ZIndex: =13
+
+            DataCardKey36 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue36 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                Height: =180
+                Items: =Choices([@'PandA Tracker'].'Business benefit')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices('PandA Tracker'.'Business benefit',DataCardValue36.SearchText)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey36.Y + DataCardKey36.Height + 5
+                ZIndex: =2
+
+            ErrorMessage36 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue36.Y + DataCardValue36.Height
+                ZIndex: =3
+
+            StarVisible36 As label:
+                Align: =Align.Center
+                Height: =DataCardKey36.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey36.Y
+                ZIndex: =4
+
+            Label3_4 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                Y: =13
+                ZIndex: =5
+
+        BusinessBenfitOthers_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Business Benfit Others"
+            Default: =ThisItem.BusinessBenfitOthers
+            DisplayMode: =If(loc_FormActionType=glb_FormActionType.ApproveForm || glb_UserInfo.Title= "BPO" Or "BTL",DisplayMode.View,Edit)
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"BusinessBenfitOthers")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =257
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "BusinessBenfitOthers")
+            Required: =false
+            Update: =DataCardValue56.Text
+            Width: =683
+            X: =1
+            Y: =3
+            ZIndex: =13
+
+            DataCardKey56 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: ="Business benefit others"
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue56 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                Height: =180
+                HintText: ="If you would like express more business benefit"
+                MaxLength: =Parent.MaxLength
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =533
+                X: =30
+                Y: =DataCardKey56.Y + DataCardKey56.Height + 5
+                ZIndex: =2
+
+            ErrorMessage56 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue56.Y + DataCardValue56.Height
+                ZIndex: =3
+
+            StarVisible56 As label:
+                Align: =Align.Center
+                Height: =DataCardKey56.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey56.Y
+                ZIndex: =4
+
+        "'Expected Finished date_DataCard2' As typedDataCard.dateEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="ExpectedFinisheddate"
+            Default: =ThisItem.'Expected Finished date'
+            DisplayMode: =If(loc_FormActionType=glb_FormActionType.ApproveForm || glb_UserInfo.Title= "BPO" Or "BTL",DisplayMode.View,Edit)
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"ExpectedFinisheddate")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            Required: =false
+            Update: =DataCardValue38.SelectedDate
+            Width: =683
+            X: =0
+            Y: =4
+            ZIndex: =13
+
+            DataCardKey38 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue38 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                EndYear: =Year(Today())+100
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey38.Y + DataCardKey38.Height + 5
+                ZIndex: =2
+
+            ErrorMessage38 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue38.Y + DataCardValue38.Height
+                ZIndex: =3
+
+            StarVisible38 As label:
+                Align: =Align.Center
+                Height: =DataCardKey38.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey38.Y
+                ZIndex: =4
+
+            Label3_5 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                Y: =16
+                ZIndex: =5
+
+        Priority_DataCard2 As typedDataCard.comboBoxEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Priority"
+            Default: =ThisItem.Priority
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Priority")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue39.Selected
+            Width: =683
+            X: =1
+            Y: =4
+            ZIndex: =13
+
+            DataCardKey39 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue39 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                Items: =Choices([@'PandA Tracker'].Priority)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices('PandA Tracker'.Priority,DataCardValue39.SearchText)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey39.Y + DataCardKey39.Height + 5
+                ZIndex: =2
+
+            ErrorMessage39 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue39.Y + DataCardValue39.Height
+                ZIndex: =3
+
+            StarVisible39 As label:
+                Align: =Align.Center
+                Height: =DataCardKey39.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey39.Y
+                ZIndex: =4
+
+            Label3_6 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                Y: =13
+                ZIndex: =5
+
+        "'Approval Status_DataCard2' As typedDataCard.comboBoxEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Status"
+            Default: =ThisItem.'Approval Status'
+            DisplayMode: =DisplayMode.View
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Status")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            Required: =false
+            Update: |-
+                =If(
+                    loc_FormActionType = glb_FormActionType.NewForm,
+                    {Value: "Sent to Business Lead for approve"},
+                    loc_FormActionType = glb_FormActionType.EditForm,
+                    Switch(
+                        loc_SelectedPandaRecord.'Approval Status'.Value,
+                        "Business Lead Reject",
+                        {Value: "Sent to Business Lead for approve"},
+                        "BTL Reject",
+                        {Value: "Sent to BTL for budget approve"},
+                        "PLO Reject",
+                        {Value: "Sent to PLO for confirmation"}
+                    )
+                )
+            Visible: =loc_FormActionType = glb_FormActionType.ApproveForm
+            Width: =683
+            X: =0
+            Y: =5
+            ZIndex: =13
+
+            DataCardKey40 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue40 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Items: =Choices([@'PandA Tracker'].'Approval Status')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices('PandA Tracker'.'Approval Status',DataCardValue40.SearchText)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =533
+                X: =30
+                Y: =DataCardKey40.Y + DataCardKey40.Height + 5
+                ZIndex: =2
+
+            ErrorMessage40 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue40.Y + DataCardValue40.Height
+                ZIndex: =3
+
+            StarVisible40 As label:
+                Align: =Align.Center
+                Height: =DataCardKey40.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey40.Y
+                ZIndex: =4
+
+        "'Created Date_DataCard2' As typedDataCard.dateEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="CreatedDate"
+            Default: =ThisItem.'Created Date'
+            DisplayMode: =If(loc_FormActionType=glb_FormActionType.ApproveForm || glb_UserInfo.Title= "BPO" Or "BTL",DisplayMode.View,Edit)
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"CreatedDate")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =Today()
+            Visible: =loc_FormActionType = glb_FormActionType.ApproveForm
+            Width: =683
+            X: =1
+            Y: =5
+            ZIndex: =13
+
+            DataCardKey41 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue41 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =DisplayMode.View
+                EndYear: =Year(Today())+100
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey41.Y + DataCardKey41.Height + 5
+                ZIndex: =2
+
+            ErrorMessage41 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue41.Y + DataCardValue41.Height
+                ZIndex: =3
+
+            StarVisible41 As label:
+                Align: =Align.Center
+                Height: =DataCardKey41.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey41.Y
+                ZIndex: =4
+
+        "'Risk/Impact without the change_DataCard2' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Risk_x002f_Impactwithoutthechang"
+            Default: =ThisItem.'Risk/Impact without the change'
+            DisplayMode: =If(loc_FormActionType=glb_FormActionType.ApproveForm || glb_UserInfo.Title= "BPO" Or "BTL",DisplayMode.View,Edit)
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Risk_x002f_Impactwithoutthechang")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "Risk_x002f_Impactwithoutthechang")
+            Required: =false
+            Update: =DataCardValue37.Text
+            Width: =683
+            X: =0
+            Y: =6
+            ZIndex: =13
+
+            DataCardKey37 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue37 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey37.Y + DataCardKey37.Height + 5
+                ZIndex: =2
+
+            ErrorMessage37 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue37.Y + DataCardValue37.Height
+                ZIndex: =3
+
+            StarVisible37 As label:
+                Align: =Align.Center
+                Height: =DataCardKey37.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey37.Y
+                ZIndex: =4
+
+            Label3_7 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                Y: =16
+                ZIndex: =5
+
+        "'Requested by_DataCard2' As typedDataCard.comboBoxEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Requestedby"
+            Default: =ThisItem.'Requested by'
+            DisplayMode: =If(loc_FormActionType=glb_FormActionType.ApproveForm || glb_UserInfo.Title= "BPO" Or "BTL",DisplayMode.View,Edit)
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Requestedby")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue43.Selected
+            Width: =683
+            X: =1
+            Y: =6
+            ZIndex: =13
+
+            DataCardKey43 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue43 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["DisplayName","Email","Picture"]
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                InputTextPlaceholder: ="Search by email"
+                Items: =Choices([@'PandA Tracker'].'Requested by')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["DisplayName"]
+                SearchItems: =Choices('PandA Tracker'.'Requested by',DataCardValue43.SearchText)
+                SelectMultiple: =false
+                Template: =ListItemTemplate.Person
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey43.Y + DataCardKey43.Height + 5
+                ZIndex: =2
+
+            ErrorMessage43 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue43.Y + DataCardValue43.Height
+                ZIndex: =3
+
+            StarVisible43 As label:
+                Align: =Align.Center
+                Height: =DataCardKey43.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey43.Y
+                ZIndex: =4
+
+            Label3_8 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                Y: =10
+                ZIndex: =5
+
+        "'Jira User Story Number_DataCard2' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="JiraUserStoryNumber"
+            Default: =ThisItem.'Jira User Story Number'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"JiraUserStoryNumber")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "JiraUserStoryNumber")
+            Required: =false
+            Update: =DataCardValue44.Text
+            Visible: =loc_FormActionType = loc_FormActionType = glb_FormActionType.ApproveForm && glb_FormActionType.ViewForm
+            Width: =683
+            X: =0
+            Y: =8
+            ZIndex: =13
+
+            DataCardKey44 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue44 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO",
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey44.Y + DataCardKey44.Height + 5
+                ZIndex: =2
+
+            ErrorMessage44 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue44.Y + DataCardValue44.Height
+                ZIndex: =3
+
+            StarVisible44 As label:
+                Align: =Align.Center
+                Height: =DataCardKey44.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey44.Y
+                ZIndex: =4
+
+        "'PMT ID_DataCard2' As typedDataCard.textualEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="PMTID"
+            Default: =ThisItem.'PMT ID'
+            DisplayMode: =If(loc_FormActionType=glb_FormActionType.ApproveForm || glb_UserInfo.Title= "BPO" Or "BTL",DisplayMode.View,Edit)
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"PMTID")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "PMTID")
+            Required: =false
+            Update: =DataCardValue46.Text
+            Visible: =loc_FormActionType = loc_FormActionType = glb_FormActionType.ApproveForm && glb_FormActionType.ViewForm
+            Width: =683
+            X: =1
+            Y: =8
+            ZIndex: =13
+
+            DataCardKey46 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue46 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO",
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey46.Y + DataCardKey46.Height + 5
+                ZIndex: =2
+
+            ErrorMessage46 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue46.Y + DataCardValue46.Height
+                ZIndex: =3
+
+            StarVisible46 As label:
+                Align: =Align.Center
+                Height: =DataCardKey46.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey46.Y
+                ZIndex: =4
+
+        "'Finished Target Date_DataCard2' As typedDataCard.dateEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="FinishedTargetDate"
+            Default: =ThisItem.'Finished Target Date'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"FinishedTargetDate")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue47.SelectedDate
+            Visible: =loc_FormActionType = glb_FormActionType.ApproveForm && glb_FormActionType.ViewForm
+            Width: =683
+            X: =0
+            Y: =9
+            ZIndex: =13
+
+            DataCardKey47 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue47 As datepicker:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultDate: =Parent.Default
+                DisplayMode: =Parent.DisplayMode
+                EndYear: =Year(Today())+100
+                IsEditable: =true
+                PaddingBottom: =0
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                StartYear: =1899
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey47.Y + DataCardKey47.Height + 5
+                ZIndex: =2
+
+            ErrorMessage47 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue47.Y + DataCardValue47.Height
+                ZIndex: =3
+
+            StarVisible47 As label:
+                Align: =Align.Center
+                Height: =DataCardKey47.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey47.Y
+                ZIndex: =4
+
+        "'Assigned PLO_DataCard2' As typedDataCard.comboBoxEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AssignedPLO"
+            Default: =ThisItem.'Assigned PLO'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"AssignedPLO")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            Required: =false
+            Update: =DataCardValue50.Selected
+            Visible: =loc_FormActionType = glb_FormActionType.ApproveForm && glb_FormActionType.ViewForm
+            Width: =683
+            X: =1
+            Y: =9
+            ZIndex: =13
+
+            DataCardKey50 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue50 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["DisplayName","Email","Picture"]
+                DisplayMode: =Parent.DisplayMode
+                Items: =Choices([@'PandA Tracker'].'Assigned PLO')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["DisplayName"]
+                SearchItems: =Choices('PandA Tracker'.'Assigned PLO',DataCardValue50.SearchText)
+                SelectMultiple: =false
+                Template: =ListItemTemplate.Person
+                Tooltip: =Parent.DisplayName
+                Width: |
+                    =533
+                X: =30
+                Y: =DataCardKey50.Y + DataCardKey50.Height + 5
+                ZIndex: =2
+
+            ErrorMessage50 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue50.Y + DataCardValue50.Height
+                ZIndex: =3
+
+            StarVisible50 As label:
+                Align: =Align.Center
+                Height: =DataCardKey50.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey50.Y
+                ZIndex: =4
+
+            Label3_9 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                Y: =13
+                ZIndex: =5
+
+        "'Assigned BA_DataCard2' As typedDataCard.comboBoxEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="AssignedBA"
+            Default: =ThisItem.AssignedBA
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"AssignedBA")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            Required: =false
+            Update: =DataCardValue54.Selected
+            Visible: =loc_FormActionType = glb_FormActionType.ApproveForm && glb_FormActionType.ViewForm
+            Width: =683
+            X: =0
+            Y: =10
+            ZIndex: =13
+
+            DataCardKey54 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue54 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value","Email","Picture"]
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO",
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                Items: =Choices([@'PandA Tracker'].AssignedBA)
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices('PandA Tracker'.AssignedBA,DataCardValue54.SearchText)
+                SelectMultiple: =false
+                Template: =ListItemTemplate.Person
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey54.Y + DataCardKey54.Height + 5
+                ZIndex: =2
+
+            ErrorMessage54 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue54.Y + DataCardValue54.Height
+                ZIndex: =3
+
+            StarVisible54 As label:
+                Align: =Align.Center
+                Height: =DataCardKey54.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey54.Y
+                ZIndex: =4
+
+            Label3_10 As label:
+                Color: =RGBA(255, 0, 0, 1)
+                Height: =27
+                Text: ="*"
+                Width: =31
+                Y: =10
+                ZIndex: =5
+
+        Creator_DataCard2 As typedDataCard.textualEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Creator"
+            Default: =ThisItem.Creator
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Creator")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =50
+            MaxLength: =DataSourceInfo([@'PandA Tracker'], DataSourceInfo.MaxLength, "Creator")
+            Required: =false
+            Update: =DataCardValue48.Text
+            Visible: =false
+            Width: =683
+            X: =1
+            Y: =10
+            ZIndex: =13
+
+            DataCardKey48 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue48 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                MaxLength: =Parent.MaxLength
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardKey48.Y + DataCardKey48.Height + 5
+                ZIndex: =2
+
+            ErrorMessage48 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue48.Y + DataCardValue48.Height
+                ZIndex: =3
+
+            StarVisible48 As label:
+                Align: =Align.Center
+                Height: =DataCardKey48.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey48.Y
+                ZIndex: =4
+
+        "'Status (Status0)_DataCard2' As typedDataCard.comboBoxEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Status0"
+            Default: =ThisItem.'Status (Status0)'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"Status0")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =140
+            Required: =false
+            Update: =DataCardValue59.Selected
+            Visible: =DataCardValue40.Selected.Value = "PLO In Developmemt"
+            Width: =683
+            X: =0
+            Y: =11
+            ZIndex: =13
+
+            DataCardKey59 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue59 As combobox:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DefaultSelectedItems: =Parent.Default
+                DisplayFields: =["Value"]
+                DisplayMode: =Parent.DisplayMode
+                Items: =Choices([@'PandA Tracker'].'Status (Status0)')
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                SearchFields: =["Value"]
+                SearchItems: =Choices('PandA Tracker'.'Status (Status0)',DataCardValue59.SearchText)
+                SelectMultiple: =false
+                Tooltip: =Parent.DisplayName
+                Width: =533
+                X: =30
+                Y: =DataCardKey59.Y + DataCardKey59.Height + 5
+                ZIndex: =2
+
+            ErrorMessage59 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue59.Y + DataCardValue59.Height
+                ZIndex: =3
+
+            StarVisible59 As label:
+                Align: =Align.Center
+                Height: =DataCardKey59.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey59.Y
+                ZIndex: =4
+
+        附件_DataCard2 As typedDataCard.attachmentsEditCard:
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="{Attachments}"
+            Default: =ThisItem.附件
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@'PandA Tracker'],DataSourceInfo.DisplayName,"{Attachments}")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =249
+            Required: =false
+            Update: =DataCardValue60.Attachments
+            Width: =683
+            X: =1
+            Y: =11
+            ZIndex: =13
+
+            DataCardKey60 As label:
+                AutoHeight: =true
+                FontWeight: =FontWeight.Bold
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue60 As attachments:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                DisplayMode: |-
+                    =If(
+                        loc_FormActionType = glb_FormActionType.NewForm || loc_FormActionType = glb_FormActionType.EditForm || (loc_FormActionType = glb_FormActionType.ApproveForm && glb_UserInfo.Title = "PLO"),
+                        DisplayMode.Edit,
+                        DisplayMode.View
+                    )
+                Height: =126
+                IsInDataCard: =true
+                Items: =Parent.Default
+                PaddingBottom: =5
+                PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PaddingRight: =5
+                PaddingTop: =5
+                Tooltip: =Parent.DisplayName
+                Width: =333
+                X: =30
+                Y: =DataCardKey60.Y + DataCardKey60.Height + 5
+                ZIndex: =2
+
+            ErrorMessage60 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue60.Y + DataCardValue60.Height
+                ZIndex: =3
+
+            StarVisible60 As label:
+                Align: =Align.Center
+                Height: =DataCardKey60.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey60.Y
+                ZIndex: =4
+
+    Component_Loading_1 As Component_Loading:
+        LoadingShowText: ="正在提交请稍后......"
+        Visible: =loc_LoadingVisible
+        ZIndex: =5
+
+    Container_ApproveWindows As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255,255, 255, 0.95)
+        Height: =768
+        Visible: =loc_ApproveWindowsVisible
+        Width: =1366
+        ZIndex: =6
+
+        Icon6 As icon.CancelBadge:
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({loc_ApproveWindowsVisible:false})
+            X: =1302
+            ZIndex: =1
+
+        Label10 As label:
+            FontWeight: =FontWeight.Bold
+            Height: =96
+            Size: =20
+            Text: ="This is Final confirmation" & If(loc_ApproveResult, " Approve","  Reject") &"?"
+            Width: =513
+            X: =415
+            Y: =205
+            ZIndex: =2
+
+        TextInput2 As text:
+            Default: =""
+            Height: =161
+            HintText: ="Please leave your comment here if you have"
+            Mode: =TextMode.MultiLine
+            Width: =399
+            X: =450
+            Y: =301
+            ZIndex: =3
+
+        Button1 As button:
+            OnSelect: |-
+                =If(
+                    IsBlank(TextInput2.Text),
+                    Set(
+                        glb_NotifyText,
+                        "Please enter comment"
+                    );
+                    Reset(Component_Notify_4),
+                    //将审批结果立马更新到审批表
+                    UpdateIf(
+                        'Approval record',
+                        Request.Id = loc_SelectedPandaRecord.ID && Approver.Value = glb_UserInfo.Email && Approval.Value = "Waiting approval",
+                        {
+                            Approval: {
+                                Value: If(
+                                    loc_ApproveResult,
+                                    "Approved",
+                                    "Rejected"
+                                )
+                            },
+                            Comment: TextInput2.Text
+                        }
+                    );
+                    If(
+                        loc_ApproveResult,
+                    //审批通过节点下,每个角色对应的事件
+                        Switch(
+                            glb_UserInfo.Title,
+                            //BPO审批通过,如果搜不到一样要跟我这个角色去审批相同单子的待审批的记录,就直接推进Request的状态
+                            glb_Position.BPO,
+                            If(
+                                IsBlank(
+                                    LookUp(
+                                        'Approval record',
+                                        Request.Id = loc_SelectedPandaRecord.ID && Approver.Value <> glb_UserInfo.Email && 'Approver: Role'.Value = glb_UserInfo.Title && Approval.Value = "Waiting approval"
+                                    )
+                                ),
+                                Patch(
+                                    'PandA Tracker',
+                                    loc_SelectedPandaRecord,
+                                    {'Approval Status': {Value: "Sent to PLO for confirmation"}}
+                                )
+                            ),
+                            //PLO审批通过,进入到项目另个状态跟踪下
+                            glb_Position.PLO,
+                            Patch(
+                                'PandA Tracker',
+                                loc_SelectedPandaRecord,
+                                {'Approval Status': {Value: "PLO In Developmemt"}}
+                            ),
+                            //BTL审批通过,给回PLO继续审批
+                            glb_Position.BTL,
+                            Patch(
+                                'PandA Tracker',
+                                loc_SelectedPandaRecord,
+                                {'Approval Status': {Value: "Sent to PLO for confirmation"}}
+                            )
+                        ),
+                //审批拒绝节点,那么把其他尚未审批的记录改成无需审批,其他角色都直接修改主记录的状态
+                        glb_UserInfo.Title = glb_Position.BPO,
+                        UpdateIf(
+                            'Approval record',
+                            Request.Id = loc_SelectedPandaRecord.ID && Approval.Value in [
+                                "Waiting approval",
+                                "PLO need confirmed",
+                                "BTL need confirmed"
+                            ],
+                            {
+                                Approval: {Value: "No Need approve"},
+                                Comment: glb_UserInfo.FullName & " Reject"
+                            }
+                        );
+                    //审批拒绝立马更新Request的状态,变成XXX拒绝
+                Patch(
+                            'PandA Tracker',
+                            loc_SelectedPandaRecord,
+                            {
+                                'Approval Status': Switch(
+                                    glb_UserInfo.Title,
+                                    "BPO",
+                                    {Value: "Business Lead Reject"},
+                                    "BTL",
+                                    {Value: "BTL Reject"},
+                                    "PLO",
+                                    {Value: "PLO Reject"}
+                                )
+                            }
+                        );
+                    );
+                    
+                //刷新一下我的审批列表
+                ClearCollect(
+                        col_PandaList,
+                        RenameColumns(
+                            Distinct(
+                                AddColumns(
+                                    Filter(
+                                        Filter(
+                                            'Approval record',
+                                            Approver.Value = glb_UserInfo.Email && Approval.Value = "Waiting approval"
+                                        ),
+                                        Switch(
+                                            glb_UserInfo.Title,
+                                            "BPO",
+                                            'Request: ApprovalStatusText'.Value = "Sent to Business Lead for approve",
+                                            "BTL",
+                                            'Request: ApprovalStatusText'.Value = "Sent to PLO for confirmation",
+                                            "PLO",
+                                            'Request: ApprovalStatusText'.Value = "Sent to BTL for confirmation"
+                                        )
+                                    ),
+                                    "a",
+                                    Request.Id
+                                ),
+                                Request.Id
+                            ),
+                            "Result",
+                            "PandaRequestID"
+                        )
+                    );
+                    UpdateContext({loc_ApproveWindowsVisible: false});
+                    Navigate(
+                        loc_LastScreen,
+                        ScreenTransition.Fade
+                    );
+                    Set(
+                        glb_NotifyText,
+                        If(
+                            loc_ApproveResult,
+                            "Approved Sucessfully!",
+                            "Rejected Sucessfully!"
+                        )
+                    );
+                    Reset(Component_Notify_3)
+                )
+            Text: ="Confirm"
+            X: =689
+            Y: =503
+            ZIndex: =4
+
+        Button2 As button:
+            OnSelect: |-
+                =UpdateContext({loc_ApproveWindowsVisible:false})
+            Text: ="Cancel"
+            X: =450
+            Y: =503
+            ZIndex: =5
+
+    Label11 As label:
+        Text: =
+        X: =270
+        Y: =40
+        ZIndex: =7
+
+    Container_AssignPLO As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255,255,255, 0.95)
+        Height: =768
+        Visible: =loc_AssignPLOVisible
+        Width: =1366
+        ZIndex: =9
+
+        Button8 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(204, 231, 246, 1)
+            Height: =476
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: =""
+            Width: =712
+            X: =327
+            Y: =146
+            ZIndex: =1
+
+        Icon8 As icon.CancelBadge:
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({loc_AssignPLOVisible:false})
+            PaddingBottom: =10
+            PaddingTop: =10
+            X: =975
+            Y: =146
+            ZIndex: =2
+
+        Label14 As label:
+            Align: =Align.Center
+            Text: ="Assign PLO"
+            X: =608
+            Y: =146
+            ZIndex: =3
+
+        ComboBox1 As combobox:
+            DisplayFields: =["field_3","field_4"]
+            IsSearchable: =false
+            Items: =Filter('Role Name Assignment Matrix',Role="PLO")
+            SearchFields: =["field_3","field_4"]
+            SearchItems: =[]
+            Template: =ListItemTemplate.Double
+            X: =519
+            Y: =245
+            ZIndex: =4
+
+        Button10 As button:
+            OnSelect: |-
+                =UpdateIf(
+                    'Approval record',
+                    Request.Id = loc_SelectedPandaRecord.ID && Approval.Value = "PLO need confirmed",
+                    {
+                        Approver: {
+                            Id: ComboBox1.Selected.ID,
+                            Value: ""
+                        },
+                        Approval: {Value: "Waiting approval"}
+                    }
+                );
+                Set(
+                    glb_NotifyText,
+                    "PLO Assign Successfully"
+                );
+                UpdateContext({loc_AssignPLOVisible: false});
+                UpdateContext(
+                    {
+                        loc_SelectedPandaRecord: LookUp(
+                            'PandA Tracker',
+                            ID = loc_SelectedPandaRecord.ID
+                        )
+                    }
+                );
+                Reset(Component_Notify_4)
+            Text: ="Submit"
+            X: =598
+            Y: =487
+            ZIndex: =5
+
+    Container_AssignBTL As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255,255,255, 0.95)
+        Height: =768
+        Visible: =loc_AssignBTLVisible
+        Width: =1366
+        ZIndex: =10
+
+        Button8_1 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(204, 231, 246, 1)
+            Height: =476
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: =""
+            Width: =712
+            X: =327
+            Y: =146
+            ZIndex: =1
+
+        Icon8_1 As icon.CancelBadge:
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({loc_AssignBTLVisible: false})
+            PaddingBottom: =10
+            PaddingTop: =10
+            X: =975
+            Y: =146
+            ZIndex: =2
+
+        Label14_1 As label:
+            Align: =Align.Center
+            Text: ="Assign BTL"
+            X: =608
+            Y: =146
+            ZIndex: =3
+
+        ComboBox1_1 As combobox:
+            DisplayFields: =["Name","field_4"]
+            IsSearchable: =false
+            Items: |-
+                =AddColumns(
+                    GroupBy(
+                        Filter(
+                            'Role Name Assignment Matrix',
+                            Role = "BTL"
+                        ),
+                        "field_4",
+                        "BTLGroup"
+                    ),
+                    "Name",
+                    First(BTLGroup).'Role name',
+                    "RecordID",
+                    First(BTLGroup).ID
+                )
+            SearchFields: =["Name","field_4"]
+            SearchItems: =[]
+            Template: =ListItemTemplate.Double
+            X: =519
+            Y: =245
+            ZIndex: =4
+
+        Button10_1 As button:
+            OnSelect: |-
+                =Concurrent(
+                    UpdateIf(
+                        'Approval record',
+                        Request.Id = loc_SelectedPandaRecord.ID && Approval.Value = "BTL need confirmed",
+                        {
+                            Approver: {
+                                Id: ComboBox1_1.Selected.RecordID,
+                                Value: ""
+                            },
+                            Approval: {Value: "Waiting approval"}
+                        }
+                    ),
+                    UpdateIf(
+                        'PandA Tracker',
+                        ID = loc_SelectedPandaRecord.ID,
+                        {'Approval Status': {Value: "Sent to BTL for budget approve"}}
+                    );
+                    
+                );
+                Set(
+                    glb_NotifyText,
+                    "BTL Assign Successfully"
+                );
+                UpdateContext({loc_AssignBTLVisible: false});
+                UpdateContext(
+                    {
+                        loc_SelectedPandaRecord: LookUp(
+                            'PandA Tracker',
+                            ID = loc_SelectedPandaRecord.ID
+                        )
+                    }
+                );
+                Reset(Component_Notify_4)
+            Text: ="Submit"
+            X: =598
+            Y: =487
+            ZIndex: =5
+
+    Container_BTLConfirm As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255,255,255, 0.95)
+        Height: =768
+        Visible: =loc_BTLConfirmVisible
+        Width: =1366
+        ZIndex: =11
+
+        Button8_2 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(204, 231, 246, 1)
+            Height: =476
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: =""
+            Width: =712
+            X: =327
+            Y: =146
+            ZIndex: =1
+
+        Icon8_2 As icon.CancelBadge:
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({loc_BTLConfirmVisible: false})
+            PaddingBottom: =10
+            PaddingTop: =10
+            X: =975
+            Y: =146
+            ZIndex: =2
+
+        Label14_2 As label:
+            Align: =Align.Center
+            Text: ="BTL Confirm"
+            X: =608
+            Y: =146
+            ZIndex: =3
+
+        Button10_2 As button:
+            OnSelect: |-
+                =Concurrent(
+                    UpdateIf(
+                        'Approval record',
+                        Request.Id = loc_SelectedPandaRecord.ID && Approval.Value = "Waiting approval" && Approver.Value = glb_UserInfo.Email,
+                        {Approval: {Value: "Approved"}}
+                    ),
+                    UpdateIf(
+                        'PandA Tracker',
+                        ID = loc_SelectedPandaRecord.ID,
+                        {
+                            'Approval Status': {Value: "Sent to PLO for confirmation"},
+                            'PMT ID': TextInput4.Text
+                        }
+                    );
+                    
+                );
+                Set(
+                    glb_NotifyText,
+                    "BTL Confirm Successfully"
+                );
+                UpdateContext({loc_BTLConfirmVisible: false});
+                UpdateContext(
+                    {
+                        loc_SelectedPandaRecord: LookUp(
+                            'PandA Tracker',
+                            ID = loc_SelectedPandaRecord.ID
+                        )
+                    }
+                );
+                Reset(Component_Notify_4)
+            Text: ="Submit"
+            X: =598
+            Y: =487
+            ZIndex: =5
+
+        Label16 As label:
+            Text: ="PMT ID"
+            X: =349
+            Y: =245
+            ZIndex: =6
+
+        TextInput4 As text:
+            Default: =""
+            X: =598
+            Y: =245
+            ZIndex: =7
+
+    Container_PLOConfirm As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255,255,255, 0.95)
+        Height: =768
+        Visible: =loc_PLOConfirmVisible
+        Width: =1366
+        ZIndex: =12
+
+        Button8_3 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(204, 231, 246, 1)
+            Height: =476
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: =""
+            Width: =712
+            X: =327
+            Y: =146
+            ZIndex: =1
+
+        Icon8_3 As icon.CancelBadge:
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({loc_PLOConfirmVisible: false})
+            PaddingBottom: =10
+            PaddingTop: =10
+            X: =975
+            Y: =146
+            ZIndex: =2
+
+        Label14_3 As label:
+            Align: =Align.Center
+            Text: ="PLO Confirm"
+            X: =608
+            Y: =146
+            ZIndex: =3
+
+        Button10_3 As button:
+            OnSelect: |-
+                =Concurrent(
+                    UpdateIf(
+                        'Approval record',
+                        Request.Id = loc_SelectedPandaRecord.ID && Approval.Value = "Waiting approval" && Approver.Value = glb_UserInfo.Email,
+                        {Approval: {Value: "Approved"}}
+                    ),
+                    UpdateIf(
+                        'PandA Tracker',
+                        ID = loc_SelectedPandaRecord.ID,
+                        {
+                            'Approval Status': {Value: "PLO In Developmemt"},
+                            'PMT ID': TextInput3_5.Text,
+                            'Estimated Cost': TextInput3_6.Text,
+                            'Finished Target Date': DatePicker1_1.SelectedDate,
+                            'Jira User Story Number': TextInput3_7.Text
+                        }
+                    )
+                );
+                UpdateIf(
+                    'Approval record',
+                    Request.Id = loc_SelectedPandaRecord.ID && Approval.Value = "Waiting approval",
+                    {
+                        Approval: {Value: "No Need approve"},
+                        Comment: glb_UserInfo.Title & " Approved"
+                    }
+                );
+                Set(
+                    glb_NotifyText,
+                    "PLO Confirm Successfully"
+                );
+                UpdateContext({loc_PLOConfirmVisible: false});
+                UpdateContext(
+                    {
+                        loc_SelectedPandaRecord: LookUp(
+                            'PandA Tracker',
+                            ID = loc_SelectedPandaRecord.ID
+                        )
+                    }
+                );
+                Reset(Component_Notify_4)
+            Text: ="Submit"
+            X: =598
+            Y: =487
+            ZIndex: =5
+
+        Label8_6 As label:
+            Text: ="Estimated Cost"
+            X: =405
+            Y: =210
+            ZIndex: =6
+
+        Label8_7 As label:
+            Text: ="PMT ID"
+            X: =405
+            Y: =283
+            ZIndex: =7
+
+        Label8_8 As label:
+            Text: ="Targeted Finished Date"
+            Width: =207
+            X: =405
+            Y: =351
+            ZIndex: =8
+
+        DatePicker1_1 As datepicker:
+            X: =647
+            Y: =351
+            ZIndex: =9
+
+        TextInput3_5 As text:
+            Default: =loc_SelectedPandaRecord.'PMT ID'
+            X: =647
+            Y: =280
+            ZIndex: =10
+
+        TextInput3_6 As text:
+            Default: =""
+            X: =647
+            Y: =210
+            ZIndex: =11
+
+        Label8_9 As label:
+            Text: ="Jira User Story Number"
+            Width: =207
+            X: =405
+            Y: =420
+            ZIndex: =12
+
+        TextInput3_7 As text:
+            Default: =""
+            X: =647
+            Y: =417
+            ZIndex: =13
+
+    Container_PLOUpdateStatus As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255,255,255, 0.95)
+        Height: =768
+        Visible: =loc_PLOUpdateStatus
+        Width: =1366
+        ZIndex: =13
+
+        Button8_4 As button:
+            DisplayMode: =DisplayMode.View
+            Fill: =RGBA(204, 231, 246, 1)
+            Height: =476
+            RadiusBottomLeft: =20
+            RadiusBottomRight: =20
+            RadiusTopLeft: =20
+            RadiusTopRight: =20
+            Text: =""
+            Width: =712
+            X: =327
+            Y: =146
+            ZIndex: =1
+
+        Icon8_4 As icon.CancelBadge:
+            Icon: =Icon.CancelBadge
+            OnSelect: |-
+                =UpdateContext({loc_PLOUpdateStatus: false})
+            PaddingBottom: =10
+            PaddingTop: =10
+            X: =975
+            Y: =146
+            ZIndex: =2
+
+        Label14_4 As label:
+            Align: =Align.Center
+            Text: ="Update Status"
+            X: =608
+            Y: =146
+            ZIndex: =3
+
+        Button10_4 As button:
+            OnSelect: |-
+                =UpdateIf(
+                    'PandA Tracker',
+                    ID = loc_SelectedPandaRecord.ID,
+                    {'Status (Status0)': Dropdown1.Selected}
+                );
+                Set(
+                    glb_NotifyText,
+                    "Update Status Successfully"
+                );
+                UpdateContext({loc_PLOUpdateStatus: false});
+                UpdateContext(
+                    {
+                        loc_SelectedPandaRecord: LookUp(
+                            'PandA Tracker',
+                            ID = loc_SelectedPandaRecord.ID
+                        )
+                    }
+                );
+                Reset(Component_Notify_4)
+            Text: ="Submit"
+            X: =598
+            Y: =487
+            ZIndex: =5
+
+        Label16_1 As label:
+            Text: ="Status"
+            X: =349
+            Y: =245
+            ZIndex: =6
+
+        Dropdown1 As dropdown:
+            AllowEmptySelection: =true
+            Items: =Choices([@'PandA Tracker'].'Status (Status0)')
+            X: =598
+            Y: =245
+            ZIndex: =7
+
+    Component_Notify_4 As Component_Notify_2:
+        NotifyContent: =glb_NotifyText
+        TitleContent: ="Hint"
+        Visible: =Self.ComponentVisible
+        ZIndex: =14
+

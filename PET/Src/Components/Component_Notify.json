@@ -1,0 +1,37 @@
+{
+  "ComponentAllowCustomization": true,
+  "ComponentChangedSinceFileImport": true,
+  "ComponentManifest": {
+    "AllowAccessToGlobals": false,
+    "AllowCustomization": true,
+    "Description": "",
+    "Name": "Component_Notify",
+    "TemplateGuid": "71aa9b5821ab41308164eb9806015c0a"
+  },
+  "ComponentType": "CanvasComponent",
+  "CustomGroupControlTemplateName": "",
+  "CustomProperties": [
+    {
+      "Category": 0,
+      "DisplayName": "NotifyVisible",
+      "Hidden": true,
+      "Name": "NotifyVisible",
+      "PropertyDataTypeKey": "Boolean",
+      "Tooltip": "自定义属性",
+      "Type": "{\"Version\":\"1.326\",\"Type\":{\"Name\":\"Root\",\"Kind\":\"_MinPrimitive\",\"EnumString\":\"\",\"Type\":[]}}"
+    }
+  ],
+  "FirstParty": true,
+  "Id": "http://microsoft.com/appmagic/Component",
+  "IsComponentLocked": false,
+  "IsComponentTemplate": true,
+  "IsCustomGroupControlTemplate": false,
+  "IsPcfControl": false,
+  "IsPremiumPcfControl": false,
+  "IsWidgetTemplate": false,
+  "LastModifiedTimestamp": "638015711654636031",
+  "Name": "71aa9b5821ab41308164eb9806015c0a",
+  "OverridableProperties": {},
+  "TemplateOriginalName": "d993c87ce1184309b969653a33226a8d",
+  "Version": "637993287126400604"
+}

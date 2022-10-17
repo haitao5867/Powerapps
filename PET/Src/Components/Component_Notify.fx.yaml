@@ -1,0 +1,33 @@
+Component_Notify As CanvasComponent:
+    Fill: =RGBA(255, 255, 255, 0.85)
+    Height: =App.DesignHeight
+    NotifyVisible: =glb_visible
+    OnReset: =Set(glb_visible,true)
+    Width: =App.DesignWidth
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Label9 As label:
+        Height: =84
+        Text: ="文本"
+        Width: =189
+        X: =550
+        Y: =230
+        ZIndex: =1
+
+    Rectangle1 As rectangle:
+        Fill: =RGBA(0, 0, 0, 0)
+        Height: =768
+        OnSelect: =Set(glb_visible,false)
+        Width: =1366
+        ZIndex: =2
+
+    Timer1 As timer:
+        AutoStart: =glb_visible
+        Duration: =3000
+        OnTimerEnd: =Set(glb_visible,false)
+        X: =180
+        Y: =160
+        ZIndex: =3
+
