@@ -838,7 +838,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "GalleryList",
-      "ParentIndex": 4,
+      "ParentIndex": 3,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -1286,7 +1286,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Image4",
-      "ParentIndex": 1,
+      "ParentIndex": 2,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2101,7 +2101,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "SelectAll CheckBox",
-      "ParentIndex": 0,
+      "ParentIndex": 1,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2882,7 +2882,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "TextInput1_127",
-      "ParentIndex": 2,
+      "ParentIndex": 3,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
