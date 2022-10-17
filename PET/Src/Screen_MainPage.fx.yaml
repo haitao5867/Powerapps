@@ -340,8 +340,9 @@ Screen_MainPage As screen:
                 Image16 As image:
                     Height: =120
                     Image: ='Frame 8929'
-                    OnSelect: |-
-                        =ClearCollect(
+                    OnSelect: |
+                        =UpdateContext({loc_LoadingVisible: true});
+                        ClearCollect(
                             col_PandaList,
                             RenameColumns(
                                 Filter(
@@ -352,6 +353,7 @@ Screen_MainPage As screen:
                                 "PandaRequestID"
                             )
                         );
+                        UpdateContext({loc_LoadingVisible: false});
                         Navigate(
                             GalleryList,
                             Fade,
@@ -360,46 +362,6 @@ Screen_MainPage As screen:
                                 loc_ListType: glb_ListType.EditList
                             }
                         );
-                        /*
-                        
-                        ClearCollect(
-                            col_PandaList,
-                            RenameColumns(
-                                Distinct(
-                                    AddColumns(
-                                        Filter(
-                                            Filter(
-                                                'Approval record',
-                                                Approver.Value = glb_UserInfo.Email && Approval.Value = "Waiting approval"
-                                            ),
-                                            Switch(
-                                                glb_UserInfo.Title,
-                                                "BPO",
-                                                'Request: ApprovalStatusText'.Value = "Sent to Business Lead for approve",
-                                                "BTL",
-                                                'Request: ApprovalStatusText'.Value = "Sent to PLO for budget approve",
-                                                "PLO",
-                                                'Request: ApprovalStatusText'.Value = "Sent to BTL for confirmation"
-                                            )
-                                        ),
-                                        "a",
-                                        Request.Id
-                                    ),
-                                    Request.Id
-                                ),
-                                "Result",
-                                "PandaRequestID"
-                            )
-                        );
-                        Navigate(
-                            GalleryList,
-                            Fade,
-                            {
-                                loc_LastScreen: App.ActiveScreen,
-                                loc_ListType: glb_ListType.ApproveList
-                            }
-                        );
-                        */
                     PaddingTop: =5
                     Width: =300
                     ZIndex: =1
@@ -407,8 +369,9 @@ Screen_MainPage As screen:
                 Image19 As image:
                     Height: =120
                     Image: ='Group 9468'
-                    OnSelect: |-
-                        =ClearCollect(
+                    OnSelect: |
+                        =UpdateContext({loc_LoadingVisible: true});
+                        ClearCollect(
                             col_PandaList,
                             RenameColumns(
                                 Filter(
@@ -419,6 +382,7 @@ Screen_MainPage As screen:
                                 "PandaRequestID"
                             )
                         );
+                        UpdateContext({loc_LoadingVisible: false});
                         Navigate(
                             GalleryList,
                             Fade,
@@ -427,46 +391,6 @@ Screen_MainPage As screen:
                                 loc_ListType: glb_ListType.EditList
                             }
                         );
-                        /*
-                        
-                        ClearCollect(
-                            col_PandaList,
-                            RenameColumns(
-                                Distinct(
-                                    AddColumns(
-                                        Filter(
-                                            Filter(
-                                                'Approval record',
-                                                Approver.Value = glb_UserInfo.Email && Approval.Value = "Waiting approval"
-                                            ),
-                                            Switch(
-                                                glb_UserInfo.Title,
-                                                "BPO",
-                                                'Request: ApprovalStatusText'.Value = "Sent to Business Lead for approve",
-                                                "BTL",
-                                                'Request: ApprovalStatusText'.Value = "Sent to PLO for budget approve",
-                                                "PLO",
-                                                'Request: ApprovalStatusText'.Value = "Sent to BTL for confirmation"
-                                            )
-                                        ),
-                                        "a",
-                                        Request.Id
-                                    ),
-                                    Request.Id
-                                ),
-                                "Result",
-                                "PandaRequestID"
-                            )
-                        );
-                        Navigate(
-                            GalleryList,
-                            Fade,
-                            {
-                                loc_LastScreen: App.ActiveScreen,
-                                loc_ListType: glb_ListType.ApproveList
-                            }
-                        );
-                        */
                     Width: =300
                     Y: =122
                     ZIndex: =2
@@ -639,4 +563,8 @@ Screen_MainPage As screen:
         X: =286
         Y: =124
         ZIndex: =24
+
+    Component_Loading_3 As Component_Loading_2:
+        Visible: =loc_LoadingVisible
+        ZIndex: =25
 
