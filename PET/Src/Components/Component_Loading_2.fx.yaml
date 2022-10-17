@@ -29,7 +29,7 @@ Component_Loading_2 As CanvasComponent:
             Y: =330
             ZIndex: =1
 
-        Label4_1 As label:
+        Label4 As label:
             Align: =Align.Center
             AlignInContainer: =AlignInContainer.Stretch
             Color: =Component_Loading_2.TextColor

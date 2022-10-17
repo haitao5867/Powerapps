@@ -31,7 +31,7 @@ Component_Notify_2 As CanvasComponent:
         Y: =(App.Height-Self.Height)/2
         ZIndex: =1
 
-    Label3_12 As label:
+    Label3_11 As label:
         Align: =Align.Center
         Color: =Parent.TitleColor
         FontWeight: =FontWeight.Semibold
@@ -43,7 +43,7 @@ Component_Notify_2 As CanvasComponent:
         Y: =Button3_4.Y
         ZIndex: =2
 
-    Label3_13 As label:
+    Label3_12 As label:
         Align: =Align.Center
         Color: =Parent.NotifyColor
         Height: =Button3_4.Height/3*2
@@ -51,10 +51,10 @@ Component_Notify_2 As CanvasComponent:
         Text: =Parent.NotifyContent
         Width: =Button3_4.Width
         X: =Button3_4.X
-        Y: =Label3_12.Y+Label3_12.Height
+        Y: =Label3_11.Y+Label3_11.Height
         ZIndex: =3
 
-    Timer1_1 As timer:
+    Timer1 As timer:
         AutoStart: =NotifyVisible
         Duration: =Parent.AutoCloseSecond*1000
         Height: =70
@@ -63,7 +63,7 @@ Component_Notify_2 As CanvasComponent:
         Width: =280
         ZIndex: =4
 
-    Rectangle1_1 As rectangle:
+    Rectangle1 As rectangle:
         Fill: =RGBA(56, 96, 178, 0)
         Height: =App.Height
         OnSelect: =Set(NotifyVisible,false)

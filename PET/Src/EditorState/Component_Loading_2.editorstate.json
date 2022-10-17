@@ -505,7 +505,7 @@
       "StyleName": "defaultImageStyle",
       "Type": "ControlInfo"
     },
-    "Label4_1": {
+    "Label4": {
       "AllowAccessToGlobals": true,
       "ControlPropertyState": [
         "Live",
@@ -637,7 +637,7 @@
       "IsLocked": false,
       "LayoutName": "",
       "MetaDataIDKey": "",
-      "Name": "Label4_1",
+      "Name": "Label4",
       "ParentIndex": 1,
       "PersistMetaDataIDKey": false,
       "Properties": [

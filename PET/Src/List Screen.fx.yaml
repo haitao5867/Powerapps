@@ -64,7 +64,7 @@
                 )
             )
         TemplatePadding: =0
-        TemplateSize: =Min(104, Self.Height - 60)
+        TemplateSize: =101
         Width: =1366
         Y: =180
         ZIndex: =1
@@ -78,8 +78,8 @@
             PaddingTop: =0
             Text: =LookUp('PandA Tracker',ID=ThisItem.PandaRequestID).'Requirement Title'
             VerticalAlign: =VerticalAlign.Top
-            Width: =Parent.TemplateWidth - 104
-            X: =32
+            Width: =1024
+            X: =270
             Y: =16
             ZIndex: =1
 
@@ -92,8 +92,8 @@
             PaddingTop: =0
             Text: =LookUp('PandA Tracker',ID=ThisItem.PandaRequestID).'Requested by'.DisplayName
             VerticalAlign: =VerticalAlign.Top
-            Width: =Parent.TemplateWidth - 104
-            X: =32
+            Width: =1004
+            X: =290
             Y: =Title1.Y + Title1.Height + 4
             ZIndex: =2
 
@@ -139,7 +139,24 @@
             Y: =52
             ZIndex: =6
 
-    Container1_1 As groupContainer.manualLayoutContainer:
+        "'SelectAll CheckBox_1' As checkbox":
+            BorderColor: =RGBA(255, 255, 255, 1)
+            CheckboxBorderColor: =RGBA(217, 217, 217, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderThickness: =0
+            Height: =100
+            OnCheck: |-
+                =UpdateContext({Selectall:!Selectall})
+            OnSelect: =
+            OnUncheck: |-
+                =UpdateContext({Selectall:!Selectall})
+            PaddingLeft: =10
+            Size: =17
+            Text: =LookUp('PandA Tracker',ID=ThisItem.PandaRequestID).'Requirement Title'
+            Width: =248
+            ZIndex: =7
+
+    Container_ActionButton As groupContainer.manualLayoutContainer:
         Fill: =RGBA(62, 81, 150, 1)
         Height: =100
         PaddingRight: =0.00
@@ -209,13 +226,17 @@
 
         "'SelectAll CheckBox' As checkbox":
             BorderColor: =RGBA(255, 255, 255, 1)
+            CheckboxBorderColor: =RGBA(217, 217, 217, 1)
             Color: =RGBA(255, 255, 255, 1)
+            FocusedBorderThickness: =0
             Height: =100
             OnCheck: |-
                 =UpdateContext({Selectall:!Selectall})
             OnSelect: =
             OnUncheck: |-
                 =UpdateContext({Selectall:!Selectall})
+            PaddingLeft: =10
+            Size: =17
             Text: ="Select all "
             Width: =156
             ZIndex: =18
