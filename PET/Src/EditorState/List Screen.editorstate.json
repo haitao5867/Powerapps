@@ -90,7 +90,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Checkbox2",
-      "ParentIndex": 3,
+      "ParentIndex": 2,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -797,14 +797,7 @@
           "NameMapSourceSchema": "?"
         },
         "WrapCount",
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "Min(104, Self.Height - 60)",
-          "InvariantPropertyName": "TemplateSize",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
+        "TemplateSize",
         "TemplatePadding",
         "Layout",
         "Transition",
@@ -845,7 +838,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "GalleryList",
-      "ParentIndex": 3,
+      "ParentIndex": 4,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -995,7 +988,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "galleryTemplate3",
-      "ParentIndex": 1,
+      "ParentIndex": 0,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -1293,7 +1286,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Image4",
-      "ParentIndex": 2,
+      "ParentIndex": 1,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -1516,7 +1509,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "Label6",
-      "ParentIndex": 5,
+      "ParentIndex": 4,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -1850,7 +1843,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "%TemplateBrowseGalleryNextIcon.ID%",
       "Name": "NextArrow1",
-      "ParentIndex": 4,
+      "ParentIndex": 3,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2017,14 +2010,7 @@
       "ControlPropertyState": [
         "CheckmarkFill",
         "CheckboxBackgroundFill",
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "RGBA(0, 18, 107, 1)",
-          "InvariantPropertyName": "CheckboxBorderColor",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
+        "CheckboxBorderColor",
         {
           "AFDDataSourceName": "",
           "AutoRuleBindingEnabled": false,
@@ -2063,14 +2049,7 @@
         "PressedFill",
         "HoverFill",
         "FontWeight",
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "",
-          "InvariantPropertyName": "VerticalAlign",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
+        "VerticalAlign",
         "X",
         "Y",
         "Width",
@@ -2078,36 +2057,15 @@
         "DisplayMode",
         "ZIndex",
         "BorderThickness",
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "2",
-          "InvariantPropertyName": "FocusedBorderThickness",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "",
-          "InvariantPropertyName": "Size",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
+        "FocusedBorderThickness",
+        "Size",
         "Italic",
         "Underline",
         "Strikethrough",
         "PaddingTop",
         "PaddingRight",
         "PaddingBottom",
-        {
-          "AFDDataSourceName": "",
-          "AutoRuleBindingEnabled": false,
-          "AutoRuleBindingString": "",
-          "InvariantPropertyName": "PaddingLeft",
-          "IsLockable": false,
-          "NameMapSourceSchema": "?"
-        },
+        "PaddingLeft",
         {
           "AFDDataSourceName": "",
           "AutoRuleBindingEnabled": false,
@@ -2143,7 +2101,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "SelectAll CheckBox",
-      "ParentIndex": 1,
+      "ParentIndex": 0,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2717,7 +2675,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "%TemplateBrowseGallerySeparator1.ID%",
       "Name": "Separator1",
-      "ParentIndex": 7,
+      "ParentIndex": 6,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -2854,7 +2812,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "%TemplateBrowseGallerySubtitle.ID%",
       "Name": "Subtitle1",
-      "ParentIndex": 6,
+      "ParentIndex": 5,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -3262,7 +3220,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "",
       "Name": "TextInput1_127",
-      "ParentIndex": 3,
+      "ParentIndex": 2,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
@@ -3534,7 +3492,7 @@
       "LayoutName": "",
       "MetaDataIDKey": "%TemplateBrowseGalleryTitle.ID%",
       "Name": "Title1",
-      "ParentIndex": 2,
+      "ParentIndex": 1,
       "PersistMetaDataIDKey": false,
       "Properties": [
         {
