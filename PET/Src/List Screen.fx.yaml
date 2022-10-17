@@ -184,7 +184,7 @@
             ZIndex: =16
 
         Image4 As image:
-            Height: =63
+            Height: =60
             Image: ='Create New'
             OnSelect: |
                 =Navigate(
@@ -195,30 +195,30 @@
                         loc_LastScreen: App.ActiveScreen
                     }
                 );
+            PaddingBottom: =5
+            PaddingTop: =5
             Visible: |-
                 =glb_UserInfo.Title in [
                     glb_Position.PLO,
                     glb_Position.Requestor
                 ]
             Width: =255
-            X: =967
-            Y: =25
+            X: =1095
+            Y: =27
             ZIndex: =17
 
-    "'SelectAll CheckBox' As checkbox":
-        BorderColor: =RGBA(255, 255, 255, 1)
-        Color: =RGBA(255, 255, 255, 1)
-        Height: =86
-        OnCheck: |-
-            =UpdateContext({Selectall:!Selectall})
-        OnSelect: =
-        OnUncheck: |-
-            =UpdateContext({Selectall:!Selectall})
-        Text: ="Select all "
-        Width: =156
-        X: =27
-        Y: =94
-        ZIndex: =8
+        "'SelectAll CheckBox' As checkbox":
+            BorderColor: =RGBA(255, 255, 255, 1)
+            Color: =RGBA(255, 255, 255, 1)
+            Height: =100
+            OnCheck: |-
+                =UpdateContext({Selectall:!Selectall})
+            OnSelect: =
+            OnUncheck: |-
+                =UpdateContext({Selectall:!Selectall})
+            Text: ="Select all "
+            Width: =156
+            ZIndex: =18
 
     Component_Notify_3 As Component_Notify_2:
         NotifyContent: =glb_NotifyText

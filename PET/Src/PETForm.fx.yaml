@@ -2188,11 +2188,6 @@ PETForm As screen:
                 Y: =DataCardKey60.Y
                 ZIndex: =4
 
-    Component_Loading_1 As Component_Loading:
-        LoadingShowText: ="正在提交请稍后......"
-        Visible: =loc_LoadingVisible
-        ZIndex: =5
-
     Container_ApproveWindows As groupContainer.manualLayoutContainer:
         Fill: =RGBA(255,255, 255, 0.95)
         Height: =768

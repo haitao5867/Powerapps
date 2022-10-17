@@ -1,0 +1,44 @@
+Component_Loading_2 As CanvasComponent:
+    Fill: =RGBA(255, 255, 255, 0.9)
+    Height: =App.Height
+    LoadingShowText: ="Text"
+    TextColor: =RGBA(0, 0, 0, 1)
+    TextContent: ="正在加载中......."
+    TextSize: =21
+    Width: =App.Width
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Container1 As groupContainer.verticalAutoLayoutContainer:
+        Height: =App.Height
+        LayoutAlignItems: =LayoutAlignItems.Center
+        LayoutDirection: =LayoutDirection.Vertical
+        LayoutJustifyContent: =LayoutJustifyContent.Center
+        LayoutMode: =LayoutMode.Auto
+        Width: =App.Width
+        ZIndex: =2
+
+        Image2_1 As image:
+            Height: =320
+            Image: =Loading
+            LayoutMinHeight: =320
+            LayoutMinWidth: =320
+            Width: =320
+            X: =150
+            Y: =330
+            ZIndex: =1
+
+        Label4_1 As label:
+            Align: =Align.Center
+            AlignInContainer: =AlignInContainer.Stretch
+            Color: =Component_Loading_2.TextColor
+            FontWeight: =FontWeight.Semibold
+            Height: =70
+            LayoutMinHeight: =70
+            LayoutMinWidth: =560
+            Size: =Component_Loading_2.TextSize
+            Text: =Component_Loading_2.TextContent
+            Width: =560
+            ZIndex: =2
+
