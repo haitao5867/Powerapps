@@ -558,12 +558,6 @@ Screen_MainPage As screen:
                     Y: =120
                     ZIndex: =2
 
-    Label7 As label:
-        Text: ="啥都没改"
-        X: =286
-        Y: =124
-        ZIndex: =24
-
     Component_Loading_3 As Component_Loading_2:
         Visible: =loc_LoadingVisible
         ZIndex: =25
