@@ -3056,66 +3056,6 @@
             {
               "logicalLocations": [
                 {
-                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.AccessibleLabel"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.AccessibleLabel",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "AccessibleLabel",
-                "module": "Component_Notify_2",
-                "type": "Component_Notify_2.Rectangle1_1"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-AccessibleLabelNeeded",
-          "ruleIndex": 3
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
-                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.TabIndex"
-                }
-              ],
-              "physicalLocation": {
-                "address": {
-                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.TabIndex",
-                  "relativeAddress": 0
-                }
-              },
-              "properties": {
-                "member": "TabIndex",
-                "module": "Component_Notify_2",
-                "type": "Component_Notify_2.Rectangle1_1"
-              }
-            }
-          ],
-          "message": {
-            "id": "issue"
-          },
-          "properties": {
-            "level": "Medium"
-          },
-          "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
-          "ruleIndex": 4
-        },
-        {
-          "locations": [
-            {
-              "logicalLocations": [
-                {
                   "fullyQualifiedName": "Component_Header_1.Icon3.AccessibleLabel"
                 }
               ],
@@ -3230,6 +3170,96 @@
           },
           "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
           "ruleIndex": 4
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "Component_Notify_2",
+                "type": "Component_Notify_2.Rectangle1_1"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 3
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.TabIndex"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "Component_Notify_2.Rectangle1_1.TabIndex",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "TabIndex",
+                "module": "Component_Notify_2",
+                "type": "Component_Notify_2.Rectangle1_1"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-TabIndexShouldBeDefinedForInteractiveControl",
+          "ruleIndex": 4
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "PETForm.Form_Panda.Company_DataCard2.TextInput3.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "PETForm.Form_Panda.Company_DataCard2.TextInput3.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "PETForm",
+                "type": "PETForm.Form_Panda.Company_DataCard2.TextInput3"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 3
         },
         {
           "locations": [
@@ -5649,6 +5679,156 @@
                 "member": "AccessibleLabel",
                 "module": "PETForm",
                 "type": "PETForm.Form_Panda.附件_DataCard2.DataCardValue60"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 3
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Business Function_DataCard2'.TextInput3_1.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Business Function_DataCard2'.TextInput3_1.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "PETForm",
+                "type": "PETForm.Form_Panda.'Business Function_DataCard2'.TextInput3_1"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 3
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Business benefit_DataCard2'.TextInput3_2.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Business benefit_DataCard2'.TextInput3_2.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "PETForm",
+                "type": "PETForm.Form_Panda.'Business benefit_DataCard2'.TextInput3_2"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 3
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "PETForm.Form_Panda.Priority_DataCard2.TextInput3_3.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "PETForm.Form_Panda.Priority_DataCard2.TextInput3_3.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "PETForm",
+                "type": "PETForm.Form_Panda.Priority_DataCard2.TextInput3_3"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 3
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Requested by_DataCard2'.TextInput3_4.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Requested by_DataCard2'.TextInput3_4.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "PETForm",
+                "type": "PETForm.Form_Panda.'Requested by_DataCard2'.TextInput3_4"
+              }
+            }
+          ],
+          "message": {
+            "id": "issue"
+          },
+          "properties": {
+            "level": "Medium"
+          },
+          "ruleId": "acc-AccessibleLabelNeeded",
+          "ruleIndex": 3
+        },
+        {
+          "locations": [
+            {
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Expected Finished date_DataCard2'.TextInput3_8.AccessibleLabel"
+                }
+              ],
+              "physicalLocation": {
+                "address": {
+                  "fullyQualifiedName": "PETForm.Form_Panda.'Expected Finished date_DataCard2'.TextInput3_8.AccessibleLabel",
+                  "relativeAddress": 0
+                }
+              },
+              "properties": {
+                "member": "AccessibleLabel",
+                "module": "PETForm",
+                "type": "PETForm.Form_Panda.'Expected Finished date_DataCard2'.TextInput3_8"
               }
             }
           ],

@@ -634,9 +634,3 @@ Screen_MainPage As screen:
                     Y: =120
                     ZIndex: =2
 
-    Label7 As label:
-        Text: ="啥都没改ba"
-        X: =286
-        Y: =124
-        ZIndex: =24
-

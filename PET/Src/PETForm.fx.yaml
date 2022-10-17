@@ -501,6 +501,17 @@ PETForm As screen:
             Y: =0
             ZIndex: =13
 
+            TextInput3 As text:
+                Default: =""
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Width: =533
+                X: =30
+                Y: =48
+                ZIndex: =1
+
             DataCardKey32 As label:
                 AutoHeight: =true
                 FontWeight: =FontWeight.Bold
@@ -510,10 +521,16 @@ PETForm As screen:
                 Wrap: =false
                 X: =30
                 Y: =10
-                ZIndex: =1
+                ZIndex: =2
 
             DataCardValue32 As combobox:
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =0
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronDisabledFill: =RGBA(255, 255, 255, 1)
+                ChevronFill: =RGBA(116, 116, 116, 1)
+                ChevronHoverFill: =RGBA(0, 0, 0, 0)
                 DefaultSelectedItems: =Parent.Default
                 DisplayFields: =["Value"]
                 DisplayMode: |-
@@ -522,6 +539,7 @@ PETForm As screen:
                         DisplayMode.Edit,
                         View
                     )
+                Height: =28
                 Items: =Choices([@'PandA Tracker'].Company)
                 OnChange: |-
                     =//把所选存进集合//
@@ -554,14 +572,14 @@ PETForm As screen:
                         )
                     )
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
+                PressedBorderColor: =RGBA(0,0,0,0)
                 SearchFields: =["Value"]
                 SearchItems: =Choices('PandA Tracker'.Company,DataCardValue32.SearchText)
                 Tooltip: =Parent.DisplayName
-                Width: |
-                    =533
-                X: =30
-                Y: =DataCardKey32.Y + DataCardKey32.Height + 5
-                ZIndex: =2
+                Width: =512
+                X: =43
+                Y: =54
+                ZIndex: =3
 
             ErrorMessage32 As label:
                 AutoHeight: =true
@@ -576,7 +594,7 @@ PETForm As screen:
                 Width: =Parent.Width - 60
                 X: =30
                 Y: =DataCardValue32.Y + DataCardValue32.Height
-                ZIndex: =3
+                ZIndex: =4
 
             StarVisible32 As label:
                 Align: =Align.Center
@@ -586,7 +604,7 @@ PETForm As screen:
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey32.Y
-                ZIndex: =4
+                ZIndex: =5
 
             Label3 As label:
                 Color: =RGBA(255, 0, 0, 1)
@@ -595,7 +613,7 @@ PETForm As screen:
                 Width: =31
                 X: =12
                 Y: =16
-                ZIndex: =5
+                ZIndex: =6
 
         "'Business Function_DataCard2' As typedDataCard.comboBoxMultiSelectEditCard":
             BorderStyle: =BorderStyle.Solid
@@ -612,6 +630,17 @@ PETForm As screen:
             Y: =0
             ZIndex: =13
 
+            TextInput3_1 As text:
+                Default: =""
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Width: =533
+                X: =30
+                Y: =48
+                ZIndex: =1
+
             DataCardKey33 As label:
                 AutoHeight: =true
                 FontWeight: =FontWeight.Bold
@@ -621,13 +650,18 @@ PETForm As screen:
                 Wrap: =false
                 X: =30
                 Y: =10
-                ZIndex: =1
+                ZIndex: =2
 
             DataCardValue33 As combobox:
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =0
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronFill: =RGBA(116, 116, 116, 1)
                 DefaultSelectedItems: =Parent.Default
                 DisplayFields: =["Value"]
                 DisplayMode: =If(loc_FormActionType=glb_FormActionType.NewForm,DisplayMode.Edit,View)
+                Height: =28
                 Items: =Choices([@'PandA Tracker'].'Business Function')
                 OnChange: |-
                     =//把所选存进集合//
@@ -663,11 +697,10 @@ PETForm As screen:
                 SearchFields: =["Value"]
                 SearchItems: =Choices('PandA Tracker'.'Business Function',DataCardValue33.SearchText)
                 Tooltip: =Parent.DisplayName
-                Width: |
-                    =533
-                X: =30
-                Y: =DataCardKey33.Y + DataCardKey33.Height + 5
-                ZIndex: =2
+                Width: =512
+                X: =43
+                Y: =54
+                ZIndex: =3
 
             ErrorMessage33 As label:
                 AutoHeight: =true
@@ -682,7 +715,7 @@ PETForm As screen:
                 Width: =Parent.Width - 60
                 X: =30
                 Y: =DataCardValue33.Y + DataCardValue33.Height
-                ZIndex: =3
+                ZIndex: =4
 
             StarVisible33 As label:
                 Align: =Align.Center
@@ -692,7 +725,7 @@ PETForm As screen:
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey33.Y
-                ZIndex: =4
+                ZIndex: =5
 
             Label3_1 As label:
                 Color: =RGBA(255, 0, 0, 1)
@@ -701,7 +734,7 @@ PETForm As screen:
                 Width: =31
                 X: =12
                 Y: =16
-                ZIndex: =5
+                ZIndex: =6
 
         "'Requirement Title_DataCard2' As typedDataCard.textualEditCard":
             BorderStyle: =BorderStyle.Solid
@@ -894,6 +927,18 @@ PETForm As screen:
             Y: =3
             ZIndex: =13
 
+            TextInput3_2 As text:
+                Default: =""
+                Height: =180
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Width: =533
+                X: =30
+                Y: =48
+                ZIndex: =1
+
             DataCardKey36 As label:
                 AutoHeight: =true
                 FontWeight: =FontWeight.Bold
@@ -903,10 +948,14 @@ PETForm As screen:
                 Wrap: =false
                 X: =30
                 Y: =10
-                ZIndex: =1
+                ZIndex: =2
 
             DataCardValue36 As combobox:
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =0
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronFill: =RGBA(116, 116, 116, 1)
                 DefaultSelectedItems: =Parent.Default
                 DisplayFields: =["Value"]
                 DisplayMode: |-
@@ -915,17 +964,17 @@ PETForm As screen:
                         DisplayMode.Edit,
                         DisplayMode.View
                     )
-                Height: =180
+                Height: =166
                 Items: =Choices([@'PandA Tracker'].'Business benefit')
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                 SearchFields: =["Value"]
                 SearchItems: =Choices('PandA Tracker'.'Business benefit',DataCardValue36.SearchText)
                 SelectMultiple: =false
                 Tooltip: =Parent.DisplayName
-                Width: =533
-                X: =30
-                Y: =DataCardKey36.Y + DataCardKey36.Height + 5
-                ZIndex: =2
+                Width: =508
+                X: =42
+                Y: =55
+                ZIndex: =3
 
             ErrorMessage36 As label:
                 AutoHeight: =true
@@ -940,7 +989,7 @@ PETForm As screen:
                 Width: =Parent.Width - 60
                 X: =30
                 Y: =DataCardValue36.Y + DataCardValue36.Height
-                ZIndex: =3
+                ZIndex: =4
 
             StarVisible36 As label:
                 Align: =Align.Center
@@ -950,7 +999,7 @@ PETForm As screen:
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey36.Y
-                ZIndex: =4
+                ZIndex: =5
 
             Label3_4 As label:
                 Color: =RGBA(255, 0, 0, 1)
@@ -958,7 +1007,7 @@ PETForm As screen:
                 Text: ="*"
                 Width: =31
                 Y: =13
-                ZIndex: =5
+                ZIndex: =6
 
         BusinessBenfitOthers_DataCard2 As typedDataCard.textualEditCard:
             BorderStyle: =BorderStyle.Solid
@@ -1053,6 +1102,17 @@ PETForm As screen:
             Y: =4
             ZIndex: =13
 
+            TextInput3_8 As text:
+                Default: =""
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Width: =533
+                X: =31
+                Y: =48
+                ZIndex: =1
+
             DataCardKey38 As label:
                 AutoHeight: =true
                 FontWeight: =FontWeight.Bold
@@ -1062,10 +1122,11 @@ PETForm As screen:
                 Wrap: =false
                 X: =30
                 Y: =10
-                ZIndex: =1
+                ZIndex: =2
 
             DataCardValue38 As datepicker:
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
                 DefaultDate: =Parent.Default
                 DisplayMode: |-
                     =If(
@@ -1074,14 +1135,15 @@ PETForm As screen:
                         DisplayMode.View
                     )
                 EndYear: =Year(Today())+100
+                Height: =28
                 PaddingBottom: =0
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                 StartYear: =1899
                 Tooltip: =Parent.DisplayName
-                Width: =533
-                X: =30
-                Y: =DataCardKey38.Y + DataCardKey38.Height + 5
-                ZIndex: =2
+                Width: =506
+                X: =43
+                Y: =54
+                ZIndex: =3
 
             ErrorMessage38 As label:
                 AutoHeight: =true
@@ -1096,7 +1158,7 @@ PETForm As screen:
                 Width: =Parent.Width - 60
                 X: =30
                 Y: =DataCardValue38.Y + DataCardValue38.Height
-                ZIndex: =3
+                ZIndex: =4
 
             StarVisible38 As label:
                 Align: =Align.Center
@@ -1106,7 +1168,7 @@ PETForm As screen:
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey38.Y
-                ZIndex: =4
+                ZIndex: =5
 
             Label3_5 As label:
                 Color: =RGBA(255, 0, 0, 1)
@@ -1114,7 +1176,7 @@ PETForm As screen:
                 Text: ="*"
                 Width: =31
                 Y: =16
-                ZIndex: =5
+                ZIndex: =6
 
         Priority_DataCard2 As typedDataCard.comboBoxEditCard:
             BorderStyle: =BorderStyle.Solid
@@ -1131,6 +1193,17 @@ PETForm As screen:
             Y: =4
             ZIndex: =13
 
+            TextInput3_3 As text:
+                Default: =""
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Width: =533
+                X: =31
+                Y: =48
+                ZIndex: =1
+
             DataCardKey39 As label:
                 AutoHeight: =true
                 FontWeight: =FontWeight.Bold
@@ -1140,10 +1213,14 @@ PETForm As screen:
                 Wrap: =false
                 X: =30
                 Y: =10
-                ZIndex: =1
+                ZIndex: =2
 
             DataCardValue39 As combobox:
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =0
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronFill: =RGBA(116, 116, 116, 1)
                 DefaultSelectedItems: =Parent.Default
                 DisplayFields: =["Value"]
                 DisplayMode: |-
@@ -1152,16 +1229,17 @@ PETForm As screen:
                         DisplayMode.Edit,
                         DisplayMode.View
                     )
+                Height: =28
                 Items: =Choices([@'PandA Tracker'].Priority)
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
                 SearchFields: =["Value"]
                 SearchItems: =Choices('PandA Tracker'.Priority,DataCardValue39.SearchText)
                 SelectMultiple: =false
                 Tooltip: =Parent.DisplayName
-                Width: =533
-                X: =30
-                Y: =DataCardKey39.Y + DataCardKey39.Height + 5
-                ZIndex: =2
+                Width: =519
+                X: =45
+                Y: =54
+                ZIndex: =3
 
             ErrorMessage39 As label:
                 AutoHeight: =true
@@ -1176,7 +1254,7 @@ PETForm As screen:
                 Width: =Parent.Width - 60
                 X: =30
                 Y: =DataCardValue39.Y + DataCardValue39.Height
-                ZIndex: =3
+                ZIndex: =4
 
             StarVisible39 As label:
                 Align: =Align.Center
@@ -1186,7 +1264,7 @@ PETForm As screen:
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey39.Y
-                ZIndex: =4
+                ZIndex: =5
 
             Label3_6 As label:
                 Color: =RGBA(255, 0, 0, 1)
@@ -1194,7 +1272,7 @@ PETForm As screen:
                 Text: ="*"
                 Width: =31
                 Y: =13
-                ZIndex: =5
+                ZIndex: =6
 
         "'Approval Status_DataCard2' As typedDataCard.comboBoxEditCard":
             BorderStyle: =BorderStyle.Solid
@@ -1442,6 +1520,17 @@ PETForm As screen:
             Y: =6
             ZIndex: =13
 
+            TextInput3_4 As text:
+                Default: =""
+                RadiusBottomLeft: =10
+                RadiusBottomRight: =10
+                RadiusTopLeft: =10
+                RadiusTopRight: =10
+                Width: =533
+                X: =31
+                Y: =53
+                ZIndex: =1
+
             DataCardKey43 As label:
                 AutoHeight: =true
                 FontWeight: =FontWeight.Bold
@@ -1451,10 +1540,13 @@ PETForm As screen:
                 Wrap: =false
                 X: =30
                 Y: =10
-                ZIndex: =1
+                ZIndex: =2
 
             DataCardValue43 As combobox:
                 BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderStyle: =BorderStyle.None
+                ChevronBackground: =RGBA(255, 255, 255, 1)
+                ChevronFill: =RGBA(116, 116, 116, 1)
                 DefaultSelectedItems: =Parent.Default
                 DisplayFields: =["DisplayName","Email","Picture"]
                 DisplayMode: |-
@@ -1463,6 +1555,7 @@ PETForm As screen:
                         DisplayMode.Edit,
                         DisplayMode.View
                     )
+                Height: =26
                 InputTextPlaceholder: ="Search by email"
                 Items: =Choices([@'PandA Tracker'].'Requested by')
                 PaddingLeft: =If(Self.DisplayMode = DisplayMode.Edit, 5, 0)
@@ -1471,10 +1564,10 @@ PETForm As screen:
                 SelectMultiple: =false
                 Template: =ListItemTemplate.Person
                 Tooltip: =Parent.DisplayName
-                Width: =533
-                X: =30
-                Y: =DataCardKey43.Y + DataCardKey43.Height + 5
-                ZIndex: =2
+                Width: =519
+                X: =45
+                Y: =60
+                ZIndex: =3
 
             ErrorMessage43 As label:
                 AutoHeight: =true
@@ -1489,7 +1582,7 @@ PETForm As screen:
                 Width: =Parent.Width - 60
                 X: =30
                 Y: =DataCardValue43.Y + DataCardValue43.Height
-                ZIndex: =3
+                ZIndex: =4
 
             StarVisible43 As label:
                 Align: =Align.Center
@@ -1499,7 +1592,7 @@ PETForm As screen:
                 Width: =30
                 Wrap: =false
                 Y: =DataCardKey43.Y
-                ZIndex: =4
+                ZIndex: =5
 
             Label3_8 As label:
                 Color: =RGBA(255, 0, 0, 1)
@@ -1507,7 +1600,7 @@ PETForm As screen:
                 Text: ="*"
                 Width: =31
                 Y: =10
-                ZIndex: =5
+                ZIndex: =6
 
         "'Jira User Story Number_DataCard2' As typedDataCard.textualEditCard":
             BorderStyle: =BorderStyle.Solid
