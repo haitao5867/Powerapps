@@ -1216,12 +1216,13 @@ PETForm As screen:
                 ZIndex: =2
 
             DataCardValue39 As combobox:
-                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                BorderColor: =
                 BorderStyle: =BorderStyle.None
                 BorderThickness: =0
                 ChevronBackground: =RGBA(255, 255, 255, 1)
                 ChevronFill: =RGBA(116, 116, 116, 1)
                 DefaultSelectedItems: =Parent.Default
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
                 DisplayFields: =["Value"]
                 DisplayMode: |-
                     =If(
@@ -1535,7 +1536,7 @@ PETForm As screen:
                 AutoHeight: =true
                 FontWeight: =FontWeight.Bold
                 Height: =34
-                Text: =Parent.DisplayName
+                Text: ="Requester"
                 Width: =Parent.Width - 60
                 Wrap: =false
                 X: =30
