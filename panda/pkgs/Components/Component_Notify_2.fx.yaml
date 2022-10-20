@@ -1,0 +1,72 @@
+Component_Notify_2 As CanvasComponent:
+    AutoCloseSecond: =3
+    ComponentVisible: =NotifyVisible
+    Fill: =RGBA(255,255,255, 0.8)
+    Height: =App.Height
+    NotifyColor: =RGBA(0, 0, 0, 1)
+    NotifyContent: ="提交成功!"
+    NotifySize: =25
+    OnReset: =Set(NotifyVisible,true)
+    TitleColor: =RGBA(0, 0, 0, 1)
+    TitleContent: ="提示"
+    TitleSize: =30
+    Width: =App.Width
+    WindowsFill: =RGBA(204, 231, 246, 1)
+    X: =0
+    Y: =0
+    ZIndex: =1
+
+    Button3_4 As button:
+        DisplayMode: =DisplayMode.View
+        Fill: =Parent.WindowsFill
+        Height: =App.Height*2/5
+        RadiusBottomLeft: =20
+        RadiusBottomRight: =20
+        RadiusTopLeft: =20
+        RadiusTopRight: =20
+        Size: =24
+        Text: =""
+        Width: =500
+        X: =(App.Width-Self.Width)/2
+        Y: =(App.Height-Self.Height)/2
+        ZIndex: =1
+
+    Label3_11 As label:
+        Align: =Align.Center
+        Color: =Parent.TitleColor
+        FontWeight: =FontWeight.Semibold
+        Height: =Button3_4.Height/3
+        Size: =Parent.TitleSize
+        Text: =Parent.TitleContent
+        Width: =Button3_4.Width
+        X: =Button3_4.X
+        Y: =Button3_4.Y
+        ZIndex: =2
+
+    Label3_12 As label:
+        Align: =Align.Center
+        Color: =Parent.NotifyColor
+        Height: =Button3_4.Height/3*2
+        Size: =Parent.NotifySize
+        Text: =Parent.NotifyContent
+        Width: =Button3_4.Width
+        X: =Button3_4.X
+        Y: =Label3_11.Y+Label3_11.Height
+        ZIndex: =3
+
+    Timer1 As timer:
+        AutoStart: =NotifyVisible
+        Duration: =Parent.AutoCloseSecond*1000
+        Height: =70
+        OnTimerEnd: =Set(NotifyVisible,false)
+        Visible: =false
+        Width: =280
+        ZIndex: =4
+
+    Rectangle1 As rectangle:
+        Fill: =RGBA(56, 96, 178, 0)
+        Height: =App.Height
+        OnSelect: =Set(NotifyVisible,false)
+        Width: =App.Width
+        ZIndex: =5
+
