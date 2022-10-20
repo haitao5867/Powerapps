@@ -19,3 +19,9 @@ Screen2 As screen:
             X: =165
             ZIndex: =2
 
+    Label11 As label:
+        Text: ="Text"
+        X: =920
+        Y: =272
+        ZIndex: =2
+
