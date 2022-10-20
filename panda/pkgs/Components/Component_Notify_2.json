@@ -82,7 +82,7 @@
         "Name": "Timer1",
         "Parent": "Component_Notify_2",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 396,
+        "PublishOrderIndex": 395,
         "Rules": [
           {
             "Category": "Data",
@@ -355,7 +355,7 @@
         "Name": "Rectangle1",
         "Parent": "Component_Notify_2",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 397,
+        "PublishOrderIndex": 396,
         "Rules": [
           {
             "Category": "Design",
@@ -600,7 +600,7 @@
         "Name": "Button3_4",
         "Parent": "Component_Notify_2",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 398,
+        "PublishOrderIndex": 397,
         "Rules": [
           {
             "Category": "Data",
@@ -949,7 +949,7 @@
         "Name": "Label3_11",
         "Parent": "Component_Notify_2",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 399,
+        "PublishOrderIndex": 398,
         "Rules": [
           {
             "Category": "Data",
@@ -1315,7 +1315,7 @@
         "Name": "Label3_12",
         "Parent": "Component_Notify_2",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 400,
+        "PublishOrderIndex": 399,
         "Rules": [
           {
             "Category": "Data",

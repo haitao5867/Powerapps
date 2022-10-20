@@ -96,7 +96,7 @@
             "Name": "Image2_1",
             "Parent": "Container1",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 402,
+            "PublishOrderIndex": 401,
             "Rules": [
               {
                 "Category": "Data",
@@ -430,7 +430,7 @@
             "Name": "Label4",
             "Parent": "Container1",
             "PersistMetaDataIDKey": false,
-            "PublishOrderIndex": 403,
+            "PublishOrderIndex": 402,
             "Rules": [
               {
                 "Category": "Data",
@@ -745,7 +745,7 @@
         "Name": "Container1",
         "Parent": "Component_Loading_2",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 401,
+        "PublishOrderIndex": 400,
         "Rules": [
           {
             "Category": "Design",
