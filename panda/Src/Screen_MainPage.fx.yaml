@@ -634,7 +634,7 @@ Screen_MainPage As screen:
         ZIndex: =25
 
     Label9 As label:
-        Text: ="Text"
+        Text: ="abc"
         X: =79
         Y: =64
         ZIndex: =26

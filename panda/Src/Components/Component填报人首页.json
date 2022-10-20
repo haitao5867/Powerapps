@@ -51,7 +51,7 @@
         "Name": "Image3_1",
         "Parent": "Component填报人首页",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 403,
+        "PublishOrderIndex": 404,
         "Rules": [
           {
             "Category": "Data",
@@ -291,7 +291,7 @@
         "Name": "Image6_2",
         "Parent": "Component填报人首页",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 404,
+        "PublishOrderIndex": 405,
         "Rules": [
           {
             "Category": "Data",
@@ -531,7 +531,7 @@
         "Name": "Image4_1",
         "Parent": "Component填报人首页",
         "PersistMetaDataIDKey": false,
-        "PublishOrderIndex": 405,
+        "PublishOrderIndex": 406,
         "Rules": [
           {
             "Category": "Data",
