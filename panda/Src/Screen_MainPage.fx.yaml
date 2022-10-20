@@ -633,9 +633,3 @@ Screen_MainPage As screen:
         Visible: =loc_LoadingVisible
         ZIndex: =25
 
-    Label9 As label:
-        Text: ="abc"
-        X: =79
-        Y: =64
-        ZIndex: =26
-

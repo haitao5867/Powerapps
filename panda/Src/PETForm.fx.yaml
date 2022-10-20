@@ -2680,14 +2680,14 @@ PETForm As screen:
         Button8_5 As button:
             DisplayMode: =DisplayMode.View
             Fill: =RGBA(204, 231, 246, 1)
-            Height: =627
+            Height: =615
             RadiusBottomLeft: =20
             RadiusBottomRight: =20
             RadiusTopLeft: =20
             RadiusTopRight: =20
             Text: =""
-            Width: =1215
-            X: =87
+            Width: =1160
+            X: =141
             Y: =60
             ZIndex: =1
 
@@ -2697,15 +2697,19 @@ PETForm As screen:
                 =UpdateContext({loc_CommentsVisible: false})
             PaddingBottom: =10
             PaddingTop: =10
-            X: =975
+            X: =1221
             Y: =60
             ZIndex: =2
 
         Label14_5 As label:
             Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            Height: =26
+            Size: =20
             Text: ="Comments"
+            Width: =226
             X: =608
-            Y: =60
+            Y: =79
             ZIndex: =3
 
         Gallery1 As gallery.galleryVertical:
@@ -2740,11 +2744,12 @@ PETForm As screen:
             TemplatePadding: =0
             TemplateSize: =120
             Width: =1119
-            X: =183
-            Y: =124
+            X: =166
+            Y: =105
             ZIndex: =6
 
             Label8 As label:
+                FontWeight: =FontWeight.Bold
                 OnSelect: =Select(Parent)
                 Text: |-
                     ="Approver Role: "
@@ -2752,13 +2757,16 @@ PETForm As screen:
                 ZIndex: =1
 
             Label8_1 As label:
+                FontWeight: =FontWeight.Bold
                 OnSelect: =Select(Parent)
                 Text: |-
                     ="Approver Name: "
+                Width: =163
                 X: =737
                 ZIndex: =2
 
             Label8_2 As label:
+                FontWeight: =FontWeight.Bold
                 OnSelect: =Select(Parent)
                 Text: |-
                     ="Approve Status: "
@@ -2767,6 +2775,7 @@ PETForm As screen:
                 ZIndex: =3
 
             Label8_3 As label:
+                FontWeight: =FontWeight.Bold
                 OnSelect: =Select(Parent)
                 Text: |-
                     ="Approve Date: "
@@ -2775,6 +2784,7 @@ PETForm As screen:
                 ZIndex: =4
 
             Label8_4 As label:
+                FontWeight: =FontWeight.Bold
                 OnSelect: =Select(Parent)
                 Text: |-
                     ="Comments: "
@@ -2806,9 +2816,10 @@ PETForm As screen:
                 ZIndex: =8
 
             Label8_12 As label:
+                FontWeight: =FontWeight.Bold
                 OnSelect: =Select(Parent)
                 Text: =ThisItem.DateAndTime
-                Width: =174
+                Width: =188
                 Y: =40
                 ZIndex: =9
 
@@ -2827,7 +2838,7 @@ PETForm As screen:
                 Fill: =RGBA(0, 0, 0, 0)
                 OnSelect: =Select(Parent)
                 Width: =1
-                X: =188
+                X: =199
                 Y: =10
                 ZIndex: =11
 
@@ -2836,8 +2847,8 @@ PETForm As screen:
                 Height: =68
                 Icon: =Icon.ArrowRight
                 OnSelect: =Select(Parent)
-                X: =188
-                Y: =28
+                X: =211
+                Y: =26
                 ZIndex: =12
 
     Component_Notify_4 As Component_Notify_2:
