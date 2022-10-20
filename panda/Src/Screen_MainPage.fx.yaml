@@ -639,9 +639,3 @@ Screen_MainPage As screen:
         Y: =64
         ZIndex: =26
 
-    Label11 As label:
-        Text: ="Text"
-        X: =260
-        Y: =64
-        ZIndex: =27
-
