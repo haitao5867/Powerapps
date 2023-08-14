@@ -2,7 +2,13 @@ Screen2 As screen:
 
     Button2 As button:
         Text: ="Button"
-        X: =545
-        Y: =270
+        X: =670
+        Y: =395
         ZIndex: =1
+
+    Label1 As label:
+        Text: ="Text"
+        X: =70
+        Y: =60
+        ZIndex: =2
 
