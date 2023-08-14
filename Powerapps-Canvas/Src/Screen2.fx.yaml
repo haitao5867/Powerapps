@@ -24,3 +24,8 @@ Screen2 As screen:
         Y: =236
         ZIndex: =4
 
+    Component1_1 As Component1:
+        X: =370
+        Y: =90
+        ZIndex: =5
+

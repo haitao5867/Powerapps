@@ -2,8 +2,8 @@ Screen1 As screen:
 
     Label1 As label:
         Text: ="Text"
-        X: =786
-        Y: =140
+        X: =830
+        Y: =130
         ZIndex: =6
 
     Button3 As button:
