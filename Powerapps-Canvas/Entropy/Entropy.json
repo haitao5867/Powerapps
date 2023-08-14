@@ -8,12 +8,13 @@
     "Host": 3,
     "Label1": 8,
     "Label2": 9,
+    "Label3": 11,
     "Screen1": 4,
     "Screen2": 6
   },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "08/14/2023 05:32:39",
+  "HeaderLastSavedDateTimeUTC": "08/14/2023 05:33:05",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": false,
@@ -36,6 +37,7 @@
     "Host": {},
     "Label1": {},
     "Label2": {},
+    "Label3": {},
     "Screen1": {},
     "Screen2": {}
   },
@@ -48,6 +50,7 @@
     "Host": 0,
     "Label1": 0,
     "Label2": 0,
+    "Label3": 0,
     "Screen1": 0,
     "Screen2": 0
   },
