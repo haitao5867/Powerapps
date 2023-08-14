@@ -1,0 +1,13 @@
+App As appinfo:
+    BackEnabled: =false
+    ConfirmExit: =true
+    ConfirmExitMessage: ="确认退出APP？"
+    Theme: =PowerAppsTheme
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+

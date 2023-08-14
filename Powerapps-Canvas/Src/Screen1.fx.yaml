@@ -1,0 +1,8 @@
+Screen1 As screen:
+
+    Button1 As button:
+        OnSelect: =Exit()
+        Text: ="Button"
+        X: =135
+        ZIndex: =1
+
