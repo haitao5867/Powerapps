@@ -25,7 +25,13 @@ Screen2 As screen:
         ZIndex: =4
 
     Component1_1 As Component1:
-        X: =370
-        Y: =90
+        X: =350
+        Y: =80
         ZIndex: =5
+
+    Label4 As label:
+        Text: ="Text"
+        X: =60
+        Y: =60
+        ZIndex: =6
 
