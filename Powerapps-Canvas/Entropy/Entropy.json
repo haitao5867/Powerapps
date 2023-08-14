@@ -1,90 +1,26 @@
 {
-  "ComponentIndexes": {
-    "Component1": 2,
-    "Component1_1": 2
-  },
+  "ComponentIndexes": {},
   "ControlUniqueGuids": {},
-  "ControlUniqueIds": {
-    "App": 1,
-    "Button1": 9,
-    "Button2": 11,
-    "Button3": 6,
-    "Component1": 12,
-    "Component1_1": 14,
-    "Host": 3,
-    "Label1": 5,
-    "Label2": 8,
-    "Label3": 13,
-    "Label7": 10,
-    "Screen1": 4,
-    "Screen2": 7
-  },
+  "ControlUniqueIds": {},
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
-  "HeaderLastSavedDateTimeUTC": "08/14/2023 05:56:21",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": false,
   "LocalResourceFileNames": {},
   "LocalResourceRootPaths": {},
-  "OrderComponentMetadata": {
-    "0761cc0711a4451ba24e8c2471ae0213": 0
-  },
-  "OrderComponentTemplate": {
-    "0761cc0711a4451ba24e8c2471ae0213": 0
-  },
+  "OrderComponentMetadata": {},
+  "OrderComponentTemplate": {},
   "OrderDataSource": {},
   "OrderGroupControls": {},
   "OrderPcfTemplate": {},
   "OrderTemplate": {},
-  "OrderXMLTemplate": {
-    "button": 1,
-    "label": 0
-  },
-  "OverridablePropertiesEntry": {
-    "App": {},
-    "Button1": {},
-    "Button2": {},
-    "Button3": {},
-    "Component1": {},
-    "Component1_1": {},
-    "Host": {},
-    "Label1": {},
-    "Label2": {},
-    "Label3": {},
-    "Label7": {},
-    "Screen1": {},
-    "Screen2": {}
-  },
+  "OrderXMLTemplate": {},
+  "OverridablePropertiesEntry": {},
   "PCFDynamicSchemaForIRRetrievalEntry": {},
   "PCFTemplateEntry": {},
-  "PublishOrderIndices": {
-    "App": 0,
-    "Button1": 8,
-    "Button2": 10,
-    "Button3": 5,
-    "Component1": 0,
-    "Component1_1": 0,
-    "Host": 0,
-    "Label1": 4,
-    "Label2": 7,
-    "Label3": 0,
-    "Label7": 9,
-    "Screen1": 3,
-    "Screen2": 6
-  },
+  "PublishOrderIndices": {},
   "ResourcesJsonIndices": {},
   "RuleScreenIdWithoutScreen": {},
-  "TemplateVersions": {},
-  "VolatileProperties": {
-    "AnalysisLoadTime": 0.0176423,
-    "ControlCount": {
-      "0761cc0711a4451ba24e8c2471ae0213": 1,
-      "button": 3,
-      "label": 3,
-      "screen": 2
-    },
-    "DeserializationLoadTime": 0.3099282
-  },
-  "WasLocalDatabaseReferencesEmpty": false
+  "TemplateVersions": {}
 }
