@@ -2,25 +2,25 @@ Screen2 As screen:
 
     Button1_1 As button:
         Text: ="Button"
-        X: =60
-        Y: =60
+        X: =342
+        Y: =184
         ZIndex: =2
 
     Button1_2 As button:
         Text: ="Button"
-        X: =80
-        Y: =80
+        X: =342
+        Y: =100
         ZIndex: =3
 
     Button1_3 As button:
         Text: ="Button"
-        X: =100
+        X: =625
         Y: =100
         ZIndex: =4
 
     Button1_4 As button:
         Text: ="Button"
-        X: =120
-        Y: =120
+        X: =612
+        Y: =184
         ZIndex: =5
 
