@@ -18,3 +18,17 @@ Screen2 As screen:
         Y: =180
         ZIndex: =3
 
+    Label7 As label:
+        Text: ="Text"
+        X: =200
+        Y: =236
+        ZIndex: =4
+
+    "PowerAppsOneGrid1 As 'Power Apps grid control'.pcfdataset":
+        DisplayMode: =DisplayMode.Edit
+        Height: =200
+        Width: =200
+        X: =441
+        Y: =390
+        ZIndex: =5
+
