@@ -1,26 +1,95 @@
 {
-  "ComponentIndexes": {},
+  "ComponentIndexes": {
+    "Component1": 2
+  },
   "ControlUniqueGuids": {},
-  "ControlUniqueIds": {},
+  "ControlUniqueIds": {
+    "App": 1,
+    "Button1": 13,
+    "Button2": 15,
+    "Button3": 8,
+    "Component1": 4,
+    "Component1_1": 10,
+    "Host": 3,
+    "Label1": 6,
+    "Label2": 12,
+    "Label3": 7,
+    "Label4": 11,
+    "Label5": 16,
+    "Label7": 14,
+    "Screen1": 5,
+    "Screen2": 9
+  },
   "FunctionParamsInvariantScripts": {},
   "FunctionParamsInvariantScriptsOnInstances": {},
+  "HeaderLastSavedDateTimeUTC": "08/14/2023 05:59:39",
   "IsLegacyComponentAllowGlobalScopeCase": false,
   "LocalConnectionIDReferences": {},
   "LocalDatabaseReferencesAsEmpty": false,
   "LocalResourceFileNames": {},
   "LocalResourceRootPaths": {},
-  "OrderComponentMetadata": {},
-  "OrderComponentTemplate": {},
+  "OrderComponentMetadata": {
+    "0761cc0711a4451ba24e8c2471ae0213": 0
+  },
+  "OrderComponentTemplate": {
+    "0761cc0711a4451ba24e8c2471ae0213": 0
+  },
   "OrderDataSource": {},
   "OrderGroupControls": {},
   "OrderPcfTemplate": {},
   "OrderTemplate": {},
-  "OrderXMLTemplate": {},
-  "OverridablePropertiesEntry": {},
+  "OrderXMLTemplate": {
+    "button": 1,
+    "label": 0
+  },
+  "OverridablePropertiesEntry": {
+    "App": {},
+    "Button1": {},
+    "Button2": {},
+    "Button3": {},
+    "Component1": {},
+    "Component1_1": {},
+    "Host": {},
+    "Label1": {},
+    "Label2": {},
+    "Label3": {},
+    "Label4": {},
+    "Label5": {},
+    "Label7": {},
+    "Screen1": {},
+    "Screen2": {}
+  },
   "PCFDynamicSchemaForIRRetrievalEntry": {},
   "PCFTemplateEntry": {},
-  "PublishOrderIndices": {},
+  "PublishOrderIndices": {
+    "App": 0,
+    "Button1": 12,
+    "Button2": 14,
+    "Button3": 7,
+    "Component1": 1,
+    "Component1_1": 9,
+    "Host": 0,
+    "Label1": 5,
+    "Label2": 11,
+    "Label3": 6,
+    "Label4": 10,
+    "Label5": 0,
+    "Label7": 13,
+    "Screen1": 4,
+    "Screen2": 8
+  },
   "ResourcesJsonIndices": {},
   "RuleScreenIdWithoutScreen": {},
-  "TemplateVersions": {}
+  "TemplateVersions": {},
+  "VolatileProperties": {
+    "AnalysisLoadTime": 0.0242093,
+    "ControlCount": {
+      "0761cc0711a4451ba24e8c2471ae0213": 2,
+      "button": 3,
+      "label": 5,
+      "screen": 2
+    },
+    "DeserializationLoadTime": 0.322911
+  },
+  "WasLocalDatabaseReferencesEmpty": false
 }
