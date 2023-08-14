@@ -110,6 +110,7 @@
     "FileID": "3f634db7-db47-4a5b-9944-64caf55c7b9e",
     "Id": "3f634db7-db47-4a5b-9944-64caf55c7b9e",
     "InstrumentationKey": "",
+    "LocalDatabaseReferences": "{}",
     "ManualOfflineProfileId": "",
     "Name": "aaa",
     "OriginatingVersion": "1.334",
