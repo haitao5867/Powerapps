@@ -66,6 +66,21 @@
     "OverridableProperties": {},
     "Version": "2.5.1"
   },
+  "Power Apps grid control": {
+    "CustomGroupControlTemplateName": "",
+    "FirstParty": false,
+    "Id": "http://microsoft.com/appmagic/powercontrol/Microsoft.PowerApps.PowerAppsOneGrid",
+    "IsComponentTemplate": false,
+    "IsCustomGroupControlTemplate": false,
+    "IsPcfControl": true,
+    "IsPremiumPcfControl": false,
+    "IsWidgetTemplate": false,
+    "LastModifiedTimestamp": "0",
+    "Name": "Microsoft.PowerApps.PowerAppsOneGrid",
+    "OverridableProperties": {},
+    "TemplateDisplayName": "Power Apps grid control",
+    "Version": "1.0.74"
+  },
   "screen": {
     "CustomGroupControlTemplateName": "",
     "FirstParty": true,
