@@ -1,32 +1,20 @@
 Screen2 As screen:
 
-    Label2 As label:
-        Text: ="Text"
+    Button1 As button:
+        Text: ="Button"
         X: =40
         Y: =40
         ZIndex: =1
 
-    Label3 As label:
-        Text: ="Text"
-        X: =60
-        Y: =60
+    Button2 As button:
+        Text: ="Button"
+        X: =790
+        Y: =350
         ZIndex: =2
 
-    Label4 As label:
+    Label2 As label:
         Text: ="Text"
-        X: =80
-        Y: =80
+        X: =920
+        Y: =180
         ZIndex: =3
-
-    Label5 As label:
-        Text: ="Text"
-        X: =100
-        Y: =100
-        ZIndex: =4
-
-    Label6 As label:
-        Text: ="Text"
-        X: =120
-        Y: =120
-        ZIndex: =5
 
