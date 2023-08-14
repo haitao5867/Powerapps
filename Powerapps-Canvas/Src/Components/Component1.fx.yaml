@@ -7,9 +7,9 @@ Component1 As CanvasComponent:
     Y: =0
     ZIndex: =1
 
-    Label6 As label:
+    Label6123123 As label:
         Text: ="Text"
-        X: =285
-        Y: =235
+        X: =230
+        Y: =275
         ZIndex: =2
 
