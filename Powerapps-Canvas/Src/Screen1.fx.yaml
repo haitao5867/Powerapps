@@ -3,8 +3,8 @@ Screen1 As screen:
     Button1 As button:
         OnSelect: =Exit()
         Text: ="Button"
-        X: =165
-        Y: =70
+        X: =550
+        Y: =295
         ZIndex: =1
 
     Label2 As label:
