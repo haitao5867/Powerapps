@@ -24,11 +24,3 @@ Screen2 As screen:
         Y: =236
         ZIndex: =4
 
-    "PowerAppsOneGrid1 As 'Power Apps grid control'.pcfdataset":
-        DisplayMode: =DisplayMode.Edit
-        Height: =200
-        Width: =200
-        X: =441
-        Y: =390
-        ZIndex: =5
-

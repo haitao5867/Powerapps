@@ -1,12 +1,1 @@
-{
-  "components": [
-    {
-      "Capabilities": {
-        "PCFExternalServiceUsageAllowed": false
-      },
-      "ComponentName": "CustomControl",
-      "Identifier": "Microsoft.PowerApps.PowerAppsOneGrid",
-      "IdentifierType": 0
-    }
-  ]
-}
+{}
