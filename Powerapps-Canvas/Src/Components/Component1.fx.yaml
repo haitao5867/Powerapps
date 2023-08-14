@@ -7,12 +7,6 @@ Component1 As CanvasComponent:
     Y: =0
     ZIndex: =1
 
-    Label5 As label:
-        Text: =Component1.Input_aaa
-        X: =265
-        Y: =220
-        ZIndex: =1
-
     Label6 As label:
         Text: ="Text"
         X: =40
